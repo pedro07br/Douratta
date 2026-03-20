@@ -1,34 +1,73 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🔐 Next.js Login System
 
-## Getting Started
+Sistema de autenticação com telas de login e cadastro, desenvolvido com Next.js e CSS customizado com efeito glassmorphism.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
+## 📸 Telas
+
+- **Login** — autenticação com email e senha
+- **Cadastro** — registro com nome, email, senha e confirmação de senha
+
+---
+
+## 🚀 Tecnologias
+
+- [Next.js](https://nextjs.org/) — framework React
+- [Ionicons](https://ionic.io/ionicons) — ícones
+- [Google Fonts — Poppins](https://fonts.google.com/specimen/Poppins) — tipografia
+- CSS puro com efeito glassmorphism
+
+---
+
+## 📁 Estrutura do projeto
+
+```
+nextjs-login/
+├── pages/
+│   ├── _app.js           # configuração global (CSS + ícones)
+│   ├── index.js          # tela de login (rota /)
+│   ├── cadastro.js       # tela de cadastro (rota /cadastro)
+│   └── api/
+│       ├── login.js      # rota de API para login
+│       └── cadastro.js   # rota de API para cadastro
+├── public/
+│   └── img/
+│       └── Tela-login.png
+├── src/
+│   └── components/
+│       ├── input/
+│       │   └── input.js  # componente de campo reutilizável
+│       └── LoginCard/
+│           └── loginCard.js
+└── styles/
+    └── globals.css
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## ⚙️ Como rodar localmente
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+**Pré-requisitos:** Node.js instalado
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/nextjs-login.git
 
-## Learn More
+# Entre na pasta
+cd nextjs-login
 
-To learn more about Next.js, take a look at the following resources:
+# Instale as dependências
+npm install
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Rode o servidor de desenvolvimento
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Acesse [http://localhost:3000](http://localhost:3000) no navegador.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 Licença
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Este projeto está sob a licença MIT.
