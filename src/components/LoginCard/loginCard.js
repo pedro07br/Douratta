@@ -1,26 +1,30 @@
 import Link from 'next/link'
 import Input from '../input/input'
+import Button from '../Button/Button'
+import styles from './loginCard.module.css'
 
 export default function LoginCard() {
   return (
-    <div className="login-box">
-      <form action="">
-        <h2>Login</h2>
+    <section className={styles.section}>
+      <div className={styles.loginBox}>
+        <form action="">
+          <h2 className={styles.title}>Login</h2>
 
-        <Input type="email" label="Email" icon="mail" />
-        <Input type="password" label="Password" icon="lock-closed" />
+          <Input type="email" label="Email" icon="mail" />
+          <Input type="password" label="Password" icon="lock-closed" />
 
-        <div className="remember-forgot">
-          <label><input type="checkbox" /> Remember me</label>
-          <a href="#">Forgot password?</a>
-        </div>
+          <div className={styles.rememberForgot}>
+            <label><input type="checkbox" /> Remember me</label>
+            <a href="#">Forgot password?</a>
+          </div>
 
-        <button type="submit">Login</button>
+          <Button type="submit">Login</Button>
 
-        <div className="register-link">
-          <p>Don't have an account? <Link href="/cadastro">Register</Link></p>
-        </div>
-      </form>
-    </div>
+          <div className={styles.registerLink}>
+            <p>Don't have an account? <Link href="/cadastro">Register</Link></p>
+          </div>
+        </form>
+      </div>
+    </section>
   )
 }

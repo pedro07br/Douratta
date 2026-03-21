@@ -1,43 +1,27 @@
 import Link from 'next/link'
+import Input from '../src/components/input/input'
+import Button from '../src/components/Button/Button'
+import styles from '../src/components/LoginCard/loginCard.module.css'
 
 export default function Cadastro() {
   return (
-    <section>
-      <form className="login-box">
-        <h2>Register</h2>
+    <section className={styles.section}>
+      <form className={styles.loginBox}>
+        <h2 className={styles.title}>Register</h2>
 
-        <div className="input-box">
-          <span className="icon"><ion-icon name="person"></ion-icon></span>
-          <input type="text" required />
-          <label>Full Name</label>
-        </div>
+        <Input type="text"     label="Full Name"        icon="person"      />
+        <Input type="email"    label="Email"            icon="mail"        />
+        <Input type="password" label="Password"         icon="lock-closed" />
+        <Input type="password" label="Confirm Password" icon="lock-closed" />
 
-        <div className="input-box">
-          <span className="icon"><ion-icon name="mail"></ion-icon></span>
-          <input type="email" required />
-          <label>Email</label>
-        </div>
-
-        <div className="input-box">
-          <span className="icon"><ion-icon name="lock-closed"></ion-icon></span>
-          <input type="password" required />
-          <label>Password</label>
-        </div>
-
-        <div className="input-box">
-          <span className="icon"><ion-icon name="lock-closed"></ion-icon></span>
-          <input type="password" required />
-          <label>Confirm Password</label>
-        </div>
-
-        <div className="remember-forgot">
+        <div className={styles.rememberForgot}>
           <label><input type="checkbox" /> I agree to the terms</label>
         </div>
 
-        <button type="submit">Register</button>
+        <Button type="submit">Register</Button>
 
-        <div className="register-link">
-          <p>Already have an account? <Link href="/">Login</Link></p>
+        <div className={styles.registerLink}>
+          <p>Already have an account? <Link href="/login">Login</Link></p>
         </div>
       </form>
     </section>

@@ -1,0 +1,101 @@
+.section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    background: url(../../../img/Tela-login.png) no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.loginBox {
+    position: relative;
+    z-index: 1;
+    width: 90%;
+    max-width: 400px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.loginBox:hover {
+    transform: scale(1.02);
+}
+
+.title {
+    font-size: 2em;
+    color: #000;
+    text-align: center;
+}
+
+.rememberForgot {
+    display: flex;
+    justify-content: space-between;
+    color: #444;
+    font-size: 0.9em;
+    margin: 15px 0;
+}
+
+.rememberForgot a {
+    color: #000;
+    text-decoration: none;
+}
+
+.rememberForgot a:hover {
+    text-decoration: underline;
+}
+
+.registerLink {
+    text-align: center;
+    margin-top: 20px;
+    color: #444;
+}
+
+.registerLink a {
+    color: #000;
+    text-decoration: none;
+}
+
+.registerLink a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .section {
+        padding: 15px;
+    }
+
+    .loginBox {
+        padding: 20px;
+        border-radius: 15px;
+        backdrop-filter: blur(8px);
+    }
+
+    .title {
+        font-size: 1.5em;
+    }
+
+    .rememberForgot {
+        flex-direction: column;
+        gap: 10px;
+        font-size: 0.8em;
+    }
+}
