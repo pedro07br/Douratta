@@ -1,70 +1,178 @@
 # 🔐 Next.js Login System
 
-Sistema de autenticação com telas de login e cadastro, desenvolvido com Next.js e CSS customizado com efeito glassmorphism.
+Sistema de autenticação com telas de login e cadastro, desenvolvido com Next.js, Prisma e MySQL rodando em Docker.
 
 ---
 
-## 📸 Telas
+## 📋 Pré-requisitos
 
-- **Login** — autenticação com email e senha
-- **Cadastro** — registro com nome, email, senha e confirmação de senha
+Antes de começar, certifique-se de ter instalado na sua máquina:
 
----
-
-## 🚀 Tecnologias
-
-- [Next.js](https://nextjs.org/) — framework React
-- [Ionicons](https://ionic.io/ionicons) — ícones
-- [Google Fonts — Poppins](https://fonts.google.com/specimen/Poppins) — tipografia
-- CSS puro com efeito glassmorphism
+- [Node.js](https://nodejs.org/) (versão 18 ou superior)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Git](https://git-scm.com/)
 
 ---
 
-## 📁 Estrutura do projeto
+## 🚀 Como rodar o projeto
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/seu-usuario/nextjs-login.git
+cd nextjs-login
+```
+
+### 2. Instale as dependências
+
+```bash
+npm install
+```
+
+### 3. Configure as variáveis de ambiente
+
+Crie os arquivos `.env` e `.env.local` na raiz do projeto.
+
+**.env** (usado pelo Prisma):
+```env
+DATABASE_URL="mysql://root@localhost:3307/nextjs_login"
+```
+
+**.env.local** (usado pelo Next.js):
+```env
+DATABASE_URL="mysql://root@localhost:3307/nextjs_login"
+JWT_SECRET="sua-chave-secreta-aqui"
+```
+
+> Use o `.env.example` como referência.
+
+### 4. Suba o banco de dados com Docker
+
+```bash
+docker-compose up -d
+```
+
+Verifique se o container está rodando:
+
+```bash
+docker ps
+```
+
+Você deve ver o container `nextjs-login-db` com status `Up`.
+
+### 5. Crie as tabelas no banco
+
+```bash
+npx prisma migrate dev --name init
+```
+
+### 6. Gere o Prisma Client
+
+```bash
+npx prisma generate
+```
+
+### 7. Rode o projeto
+
+```bash
+npm run dev
+```
+
+Acesse [http://localhost:3000](http://localhost:3000) no navegador.
+
+---
+
+## 🗂️ Estrutura do projeto
 
 ```
 nextjs-login/
 ├── pages/
 │   ├── _app.js           # configuração global (CSS + ícones)
-│   ├── index.js          # tela de login (rota /)
-│   ├── cadastro.js       # tela de cadastro (rota /cadastro)
+│   ├── index.js          # home (protegida por token)
+│   ├── login.js          # tela de login
+│   ├── cadastro.js       # tela de cadastro
 │   └── api/
-│       ├── login.js      # rota de API para login
-│       └── cadastro.js   # rota de API para cadastro
+│       └── user/
+│           ├── login.js      # rota de API para login
+│           └── cadastro.js   # rota de API para cadastro
+├── services/
+│   ├── user.js           # Prisma + bcrypt + JWT
+│   └── auth.js           # verificação de token
+├── src/
+│   └── components/
+│       ├── Button/
+│       │   ├── Button.js
+│       │   └── Button.module.css
+│       ├── input/
+│       │   ├── input.js
+│       │   └── input.module.css
+│       └── LoginCard/
+│           ├── loginCard.js
+│           └── loginCard.module.css
+├── prisma/
+│   └── schema.prisma     # modelo do banco de dados
+├── generated/
+│   └── prisma/           # gerado automaticamente pelo Prisma
 ├── public/
 │   └── img/
 │       └── Tela-login.png
-├── src/
-│   └── components/
-│       ├── input/
-│       │   └── input.js  # componente de campo reutilizável
-│       └── LoginCard/
-│           └── loginCard.js
-└── styles/
-    └── globals.css
+├── styles/
+│   └── globals.css
+├── docker-compose.yml
+├── .env.example
+└── prisma.config.ts
 ```
 
 ---
 
-## ⚙️ Como rodar localmente
+## 🛠️ Tecnologias
 
-**Pré-requisitos:** Node.js instalado
+- [Next.js](https://nextjs.org/) — framework React
+- [Prisma 7](https://www.prisma.io/) — ORM para banco de dados
+- [MySQL](https://www.mysql.com/) — banco de dados relacional
+- [Docker](https://www.docker.com/) — ambiente padronizado
+- [bcryptjs](https://www.npmjs.com/package/bcryptjs) — criptografia de senhas
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) — autenticação via JWT
+- [cookies-next](https://www.npmjs.com/package/cookies-next) — gerenciamento de cookies
+- [Ionicons](https://ionic.io/ionicons) — ícones
+- [Google Fonts — Poppins](https://fonts.google.com/specimen/Poppins) — tipografia
+
+---
+
+## 🗄️ Banco de dados
+
+O banco roda na porta `3307` para não conflitar com instalações locais do MySQL.
+
+Para visualizar os dados no navegador:
 
 ```bash
-# Clone o repositório
-git clone https://github.com/seu-usuario/nextjs-login.git
-
-# Entre na pasta
-cd nextjs-login
-
-# Instale as dependências
-npm install
-
-# Rode o servidor de desenvolvimento
-npm run dev
+npx prisma studio
 ```
 
-Acesse [http://localhost:3000](http://localhost:3000) no navegador.
+Acesse [http://localhost:5555](http://localhost:5555).
+
+---
+
+## ⚠️ Problemas comuns
+
+**Docker não sobe o container:**
+```bash
+# para containers antigos e reinicia
+docker-compose down
+docker-compose up -d
+```
+
+**Erro de migration:**
+```bash
+# reseta e recria as tabelas
+npx prisma migrate reset
+npx prisma migrate dev --name init
+```
+
+**Prisma Client desatualizado:**
+```bash
+npx prisma generate
+```
 
 ---
 

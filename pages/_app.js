@@ -1,5 +1,5 @@
-import '../styles/globals.css'
-import Script from 'next/script'
+import "../styles/globals.css";
+import Script from "next/script";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -14,5 +14,5 @@ export default function App({ Component, pageProps }) {
         src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
       />
     </>
-  )
+  );
 }
