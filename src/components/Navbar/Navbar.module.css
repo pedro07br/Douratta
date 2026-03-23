@@ -1,0 +1,60 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 32px;
+    border-bottom: 0.5px solid #d8d0c4;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 400;
+    color: #1a1a1a;
+    letter-spacing: 6px;
+    font-family: Georgia, serif;
+    text-decoration: none;
+}
+
+.logoAccent {
+    color: #9a7c4f;
+}
+
+.navRight {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.navLink {
+    font-size: 11px;
+    color: #888;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.navLink:hover {
+    color: #9a7c4f;
+}
+
+.cartPill {
+    font-size: 11px;
+    color: #9a7c4f;
+    border: 0.5px solid #9a7c4f;
+    padding: 5px 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    background: none;
+    transition: all 0.2s;
+}
+
+.cartPill:hover {
+    background: #9a7c4f;
+    color: white;
+}

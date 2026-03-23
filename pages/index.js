@@ -2,7 +2,14 @@ import { getCookie } from "cookies-next";
 import { verifyToken } from "../services/auth";
 
 export default function Home() {
-  return <div>Home</div>;
+  return (
+    <main>
+
+      <div>Home</div>
+
+      <h1 className="title">Welcome to the Home Page!</h1>
+    </main>
+  );
 }
 
 export const getServerSideProps = async ({ req, res }) => {
@@ -12,16 +19,15 @@ export const getServerSideProps = async ({ req, res }) => {
 
     verifyToken(token);
     return {
-      props: {}
+      props: {},
     };
-
   } catch (error) {
     return {
       redirect: {
         permanent: false,
-        destination: "/login"
+        destination: "/login",
       },
-      props: {}
+      props: {},
     };
   }
 };

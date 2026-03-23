@@ -9,6 +9,7 @@ export default function LoginCard({ formData, error, onSubmit, onChange }) {
       <div className={styles.loginBox}>
         <form onSubmit={onSubmit}>
           <h2 className={styles.title}>Login</h2>
+          <div className={styles.titleDivider} />
 
           <Input type="email"    label="Email"    icon="mail"        required value={formData.email}    onChange={(e) => onChange(e, 'email')}    />
           <Input type="password" label="Password" icon="lock-closed" required value={formData.password} onChange={(e) => onChange(e, 'password')} />
