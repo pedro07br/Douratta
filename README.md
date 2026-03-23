@@ -1,6 +1,33 @@
-# 🔐 Next.js Login System
+# 🛍️ E-commerce Fullstack com Next.js
 
-Sistema de autenticação com telas de login e cadastro, desenvolvido com Next.js, Prisma e MySQL rodando em Docker.
+Aplicação completa de e-commerce desenvolvida com Next.js, Prisma e MySQL, incluindo autenticação, catálogo de produtos, filtros, página de detalhes e carrinho de compras com gerenciamento global de estado.
+
+---
+
+## ✨ Funcionalidades
+
+### 🔐 Autenticação
+- Cadastro de usuários
+- Login com JWT
+- Proteção de rotas
+
+### 🛒 Carrinho de Compras
+- Adição de produtos
+- Controle de quantidade
+- Atualização dinâmica
+- Abertura lateral (sidebar)
+- Estado global com Context API
+
+### 🛍️ Catálogo de Produtos
+- Listagem de produtos (coleções)
+- Filtros por categoria
+- Navegação dinâmica
+
+### 💎 Página de Produto
+- Nome, descrição e preço
+- Controle de estoque
+- Seleção de quantidade
+- Produtos relacionados
 
 ---
 
@@ -91,24 +118,47 @@ nextjs-login/
 │   ├── index.js          # home (protegida por token)
 │   ├── login.js          # tela de login
 │   ├── cadastro.js       # tela de cadastro
-│   └── api/
+│   ├── carrinho.js(novo) # tela do carrinho
+│   ├── api/
+│   │   └── user/
+│   │       ├── login.js      # rota de API para login
+│   │       └── cadastro.js   # rota de API para cadastro
+│   └── produtos/
 │       └── user/
-│           ├── login.js      # rota de API para login
-│           └── cadastro.js   # rota de API para cadastro
 ├── services/
-│   ├── user.js           # Prisma + bcrypt + JWT
-│   └── auth.js           # verificação de token
+│   ├── index.js        # listagem + filtros
+│   └── [slug].js       # detalhe do produto
 ├── src/
-│   └── components/
-│       ├── Button/
-│       │   ├── Button.js
-│       │   └── Button.module.css
-│       ├── input/
-│       │   ├── input.js
-│       │   └── input.module.css
-│       └── LoginCard/
-│           ├── loginCard.js
-│           └── loginCard.module.css
+│   ├── components/
+│   │   ├── Button/
+│   │   │   ├── Button.js
+│   │   │   └── Button.module.css
+│   │   ├── cart/
+│   │   │   └── Cart.module.css
+│   │   ├── cartSidebar/
+│   │   │   ├── CartSidebar.js
+│   │   │   └── cartSidebar.module.css
+│   │   ├── input/
+│   │   │   ├── input.js
+│   │   │   └── input.module.css
+│   │   ├── LoginCard/
+│   │   │   ├── loginCard.js
+│   │   │   └── loginCard.module.css
+│   │   ├── Navbar/
+│   │   │   ├── Navbar.js
+│   │   │   └── Navbar.module.css
+│   │   ├── productCard/
+│   │   │   ├── productCard.js
+│   │   │   └── productCard.module.css
+│   │   ├── ProductDetail/
+│   │   │   └── ProductDetail.module.css
+│   │   ├── ProductList/
+│   │   │   └── ProductList.module.css
+│   │   ├── LoginCard/
+│   │   │   ├── loginCard.js
+│   │   │   └── loginCard.module.css
+│   └── context/
+│       └── CartContext.js
 ├── prisma/
 │   └── schema.prisma     # modelo do banco de dados
 ├── generated/
@@ -117,7 +167,9 @@ nextjs-login/
 │   └── img/
 │       └── Tela-login.png
 ├── styles/
-│   └── globals.css
+│   ├── globals.css
+│   ├──marble
+│   └──Home.module
 ├── docker-compose.yml
 ├── .env.example
 └── prisma.config.ts
