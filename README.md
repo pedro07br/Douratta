@@ -46,7 +46,7 @@ Antes de começar, certifique-se de ter instalado na sua máquina:
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/nextjs-login.git
+git clone [https://github.com/seu-usuario/nextjs-login.git](https://github.com/pedro07br/Douratta)
 cd nextjs-login
 ```
 
