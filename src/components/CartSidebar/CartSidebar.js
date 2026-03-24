@@ -68,11 +68,12 @@ export default function CartSidebar() {
             <Link href="/checkout">
               <button className={styles.checkoutBtn}>FINALIZAR COMPRA</button>
             </Link>
-            <Link href="/carrinho">
-              <button className={styles.viewCartBtn} onClick={() => setIsOpen(false)}>
-                VER CARRINHO COMPLETO
+            <Link href="/checkout">
+              <button className={styles.checkoutBtn} onClick={() => setIsOpen(false)}>
+                FINALIZAR COMPRA
               </button>
             </Link>
+            
           </div>
         )}
       </div>

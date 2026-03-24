@@ -1,7 +1,10 @@
 import Link from 'next/link'
+import { useCart } from '../../context/CartContext'
 import styles from './ProductCard.module.css'
 
 export default function ProductCard({ product }) {
+  const { addItem } = useCart()
+
   const formatted = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL'
@@ -15,11 +18,7 @@ export default function ProductCard({ product }) {
             <span className={styles.badge}>{product.badge}</span>
           )}
           {product.imageUrl ? (
-            <img
-              src={product.imageUrl}
-              alt={product.name}
-              className={styles.image}
-            />
+            <img src={product.imageUrl} alt={product.name} className={styles.image} />
           ) : (
             <svg className={styles.placeholder} width="90" height="90" viewBox="0 0 90 90">
               <circle cx="45" cy="45" r="32" fill="none" stroke="#9a7c4f" strokeWidth="1"/>
@@ -37,7 +36,7 @@ export default function ProductCard({ product }) {
               className={styles.addBtn}
               onClick={(e) => {
                 e.preventDefault()
-                // conectar ao carrinho futuramente
+                addItem(product, 1)
               }}
             >
               + CARRINHO

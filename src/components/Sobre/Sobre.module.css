@@ -1,0 +1,193 @@
+.hero {
+    height: 340px;
+    background: #1a1410;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.heroBg {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+        45deg, transparent, transparent 40px,
+        rgba(201,169,110,0.03) 40px, rgba(201,169,110,0.03) 41px
+    );
+}
+
+.heroContent { position: relative; }
+
+.heroTag {
+    font-size: 10px;
+    color: #9a7c4f;
+    letter-spacing: 4px;
+    margin-bottom: 16px;
+}
+
+.heroTitle {
+    font-size: 36px;
+    font-weight: 300;
+    color: #f0e6d0;
+    font-family: Georgia, serif;
+    letter-spacing: 8px;
+    margin-bottom: 12px;
+}
+
+.heroDivider {
+    width: 32px;
+    height: 0.5px;
+    background: #9a7c4f;
+    margin: 0 auto;
+}
+
+.section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 64px 32px;
+}
+
+.sectionTitle {
+    font-size: 20px;
+    font-weight: 400;
+    color: #1a1a1a;
+    font-family: Georgia, serif;
+    letter-spacing: 4px;
+    text-align: center;
+}
+
+.sectionDivider {
+    width: 24px;
+    height: 0.5px;
+    background: #9a7c4f;
+    margin: 12px 0 24px;
+}
+
+.sectionDividerCenter {
+    margin: 12px auto 0;
+}
+
+.text {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.9;
+    letter-spacing: 0.3px;
+    margin-bottom: 24px;
+}
+
+.valoresGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #e8e0d4;
+    margin-top: 40px;
+}
+
+.valorCard {
+    background: white;
+    padding: 32px 24px;
+    text-align: center;
+}
+
+.valorCardDark {
+    background: #1a1410;
+}
+
+.valorIcon {
+    font-size: 24px;
+    margin-bottom: 16px;
+    opacity: 0.6;
+    color: #9a7c4f;
+}
+
+.valorIconLight {
+    font-size: 24px;
+    margin-bottom: 16px;
+    opacity: 0.6;
+    color: #c9a96e;
+}
+
+.valorTitle {
+    font-size: 12px;
+    color: #1a1a1a;
+    font-family: Georgia, serif;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+.valorTitleLight {
+    font-size: 12px;
+    color: #f0e6d0;
+    font-family: Georgia, serif;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+.valorText {
+    font-size: 12px;
+    color: #9a8a78;
+    line-height: 1.7;
+}
+
+.valorTextLight {
+    font-size: 12px;
+    color: #6a5a48;
+    line-height: 1.7;
+}
+
+.teamSection {
+    background: white;
+    padding: 64px 32px;
+}
+
+.teamHeader {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.teamGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.teamCard { text-align: center; }
+
+.teamAvatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #f0ece6;
+    border: 0.5px solid #d8d0c4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-family: Georgia, serif;
+    color: #9a7c4f;
+    margin: 0 auto 14px;
+}
+
+.teamName {
+    font-size: 13px;
+    color: #1a1a1a;
+    font-family: Georgia, serif;
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+
+.teamRole {
+    font-size: 10px;
+    color: #9a8a78;
+    letter-spacing: 2px;
+}
+
+@media (max-width: 768px) {
+    .valoresGrid { grid-template-columns: 1fr; }
+    .teamGrid { grid-template-columns: repeat(2, 1fr); }
+    .heroTitle { font-size: 26px; }
+}

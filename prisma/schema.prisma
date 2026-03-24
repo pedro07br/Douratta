@@ -20,6 +20,7 @@ model User {
   orders    Order[]
   cart      Cart?
   addresses Address[]
+  wishlist  Wishlist[]
 }
 
 enum Role {
@@ -42,7 +43,7 @@ model Product {
   description String    @db.Text
   price       Decimal   @db.Decimal(10, 2)
   stock       Int       @default(0)
-  imageUrl    String?
+  imageUrl    String?   @db.LongText
   slug        String    @unique
   active      Boolean   @default(true)
   createdAt   DateTime  @default(now())
@@ -53,6 +54,7 @@ model Product {
 
   cartItems   CartItem[]
   orderItems  OrderItem[]
+  wishlist  Wishlist[]
 }
 
 model Cart {
@@ -124,4 +126,15 @@ model Address {
 
   userId     Int
   user       User     @relation(fields: [userId], references: [id])
+}
+
+model Wishlist {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+
+  productId Int
+  product   Product  @relation(fields: [productId], references: [id])
 }

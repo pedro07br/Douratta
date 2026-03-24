@@ -1,6 +1,5 @@
 import '../styles/globals.css'
 import Script from 'next/script'
-import Head from 'next/head'
 import { CartProvider } from '../src/context/CartContext'
 import CartSidebar from '../src/components/CartSidebar/CartSidebar'
 import Footer from '../src/components/Footer/Footer'
@@ -8,12 +7,6 @@ import Footer from '../src/components/Footer/Footer'
 export default function App({ Component, pageProps }) {
   return (
     <CartProvider>
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
       <Component {...pageProps} />
       <Footer />
       <CartSidebar />

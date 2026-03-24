@@ -1,14 +1,36 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Navbar from '../../src/components/Navbar/Navbar'
 import ProductCard from '../../src/components/productCard/ProductCard'
+import { useCart } from '../../src/context/CartContext'
 import styles from '../../src/components/ProductDetail/ProductDetail.module.css'
 import prisma from '../../services/prisma'
-import { useCart } from '../../src/context/CartContext'
 
 export default function ProdutoDetalhe({ product, related }) {
   const [quantity, setQuantity] = useState(1)
+  const [isFav, setIsFav] = useState(false)
   const { addItem } = useCart()
+
+  useEffect(() => {
+    fetch('/api/user/favoritos')
+      .then(r => r.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setIsFav(data.some(f => f.productId === product.id))
+        }
+      })
+      .catch(() => {})
+  }, [product.id])
+
+  const toggleFav = async () => {
+    const res = await fetch('/api/user/favoritos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ productId: product.id })
+    })
+    const data = await res.json()
+    if (res.ok) setIsFav(data.action === 'added')
+  }
 
   const formatted = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -22,7 +44,7 @@ export default function ProdutoDetalhe({ product, related }) {
       <div className={styles.breadcrumb}>
         <Link href="/produtos">COLEÇÕES</Link>
         &nbsp;/&nbsp;
-        <Link href={`/produtos?category=${product.category.id}`}>
+        <Link href={`/produtos?categoria=${product.category.slug}`}>
           {product.category.name.toUpperCase()}
         </Link>
         &nbsp;/&nbsp;
@@ -57,8 +79,12 @@ export default function ProdutoDetalhe({ product, related }) {
             <button className={styles.qtyBtn} onClick={() => setQuantity(q => Math.min(product.stock, q + 1))}>+</button>
           </div>
 
-          <button className={styles.addBtn} onClick={() => addItem(product, quantity)}>+ ADICIONAR AO CARRINHO</button>
-          <button className={styles.wishBtn}>♡ &nbsp; ADICIONAR À LISTA DE DESEJOS</button>
+          <button className={styles.addBtn} onClick={() => addItem(product, quantity)}>
+            + ADICIONAR AO CARRINHO
+          </button>
+          <button className={`${styles.wishBtn} ${isFav ? styles.wishBtnActive : ''}`} onClick={toggleFav}>
+            {isFav ? '♥' : '♡'} &nbsp; {isFav ? 'NOS FAVORITOS' : 'ADICIONAR AOS FAVORITOS'}
+          </button>
         </div>
       </div>
 
@@ -83,17 +109,10 @@ export const getServerSideProps = async ({ params }) => {
     where: { slug: params.slug },
     include: { category: true }
   })
-
-  if (!product) {
-    return { notFound: true }
-  }
+  if (!product) return { notFound: true }
 
   const related = await prisma.product.findMany({
-    where: {
-      categoryId: product.categoryId,
-      id: { not: product.id },
-      active: true
-    },
+    where: { categoryId: product.categoryId, id: { not: product.id }, active: true },
     include: { category: true },
     take: 4
   })

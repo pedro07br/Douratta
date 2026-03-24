@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Navbar from '../src/components/Navbar/Navbar'
-import ProductCard from '../src/components/ProductCard/ProductCard'
+import ProductCard from '../src/components/productCard/ProductCard'
 import styles from '../src/components/Home/Home.module.css'
 import prisma from '../services/prisma'
 
@@ -109,7 +109,7 @@ export default function Home({ featured, categories }) {
 }
 
 export const getServerSideProps = async () => {
-  const [featured, categories] = await Promise.all([
+  const [featuredRaw, categories] = await Promise.all([
     prisma.product.findMany({
       where: { active: true },
       include: { category: true },
@@ -121,6 +121,11 @@ export const getServerSideProps = async () => {
       orderBy: { name: 'asc' }
     })
   ])
+
+  const featured = featuredRaw.map(p => ({
+    ...p,
+    price: Number(p.price) // 🔥 ESSA LINHA RESOLVE
+  }))
 
   return {
     props: {

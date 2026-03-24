@@ -232,3 +232,9 @@
         padding: 0 16px 40px;
     }
 }
+
+.wishBtnActive {
+    border-color: #9a7c4f;
+    color: #9a7c4f;
+    background: #fdf9f4;
+}

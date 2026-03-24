@@ -26,7 +26,7 @@ export default async function handler(req, res) {
           phone: body.phone || user.phone,
           cpf:   body.cpf   || user.cpf,
         },
-        select: { id: true, name: true, email: true, phone: true, cpf: true }
+        select: { id: true, name: true, email: true, phone: true, cpf: true, role: true }
       })
       return res.status(200).json(updated)
     }

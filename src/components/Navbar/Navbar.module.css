@@ -58,3 +58,19 @@
     background: #9a7c4f;
     color: white;
 }
+
+.adminPill {
+    font-size: 11px;
+    color: #1a1a1a;
+    border: 0.5px solid #1a1a1a;
+    padding: 5px 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.adminPill:hover {
+    background: #1a1a1a;
+    color: white;
+}
