@@ -126,6 +126,8 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   role: 'role',
+  phone: 'phone',
+  cpf: 'cpf',
   createdAt: 'createdAt'
 };
 
@@ -180,20 +182,24 @@ exports.Prisma.OrderItemScalarFieldEnum = {
   productId: 'productId'
 };
 
+exports.Prisma.AddressScalarFieldEnum = {
+  id: 'id',
+  label: 'label',
+  street: 'street',
+  number: 'number',
+  complement: 'complement',
+  district: 'district',
+  city: 'city',
+  state: 'state',
+  zipCode: 'zipCode',
+  isMain: 'isMain',
+  createdAt: 'createdAt',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
-};
-
-exports.Prisma.UserOrderByRelevanceFieldEnum = {
-  name: 'name',
-  email: 'email',
-  password: 'password'
-};
-
-exports.Prisma.CategoryOrderByRelevanceFieldEnum = {
-  name: 'name',
-  slug: 'slug'
 };
 
 exports.Prisma.NullsOrder = {
@@ -201,11 +207,35 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
+exports.Prisma.UserOrderByRelevanceFieldEnum = {
+  name: 'name',
+  email: 'email',
+  password: 'password',
+  phone: 'phone',
+  cpf: 'cpf'
+};
+
+exports.Prisma.CategoryOrderByRelevanceFieldEnum = {
+  name: 'name',
+  slug: 'slug'
+};
+
 exports.Prisma.ProductOrderByRelevanceFieldEnum = {
   name: 'name',
   description: 'description',
   imageUrl: 'imageUrl',
   slug: 'slug'
+};
+
+exports.Prisma.AddressOrderByRelevanceFieldEnum = {
+  label: 'label',
+  street: 'street',
+  number: 'number',
+  complement: 'complement',
+  district: 'district',
+  city: 'city',
+  state: 'state',
+  zipCode: 'zipCode'
 };
 exports.Role = exports.$Enums.Role = {
   CUSTOMER: 'CUSTOMER',
@@ -227,7 +257,8 @@ exports.Prisma.ModelName = {
   Cart: 'Cart',
   CartItem: 'CartItem',
   Order: 'Order',
-  OrderItem: 'OrderItem'
+  OrderItem: 'OrderItem',
+  Address: 'Address'
 };
 
 /**

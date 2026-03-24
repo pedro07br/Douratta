@@ -1,0 +1,328 @@
+.hero {
+    text-align: center;
+    padding: 40px 32px 28px;
+    border-bottom: 0.5px solid #e8e0d4;
+}
+
+.heroTitle {
+    font-size: 22px;
+    font-weight: 400;
+    color: #1a1a1a;
+    font-family: Georgia, serif;
+    letter-spacing: 6px;
+}
+
+.heroSub {
+    font-size: 10px;
+    color: #9a8a78;
+    letter-spacing: 2px;
+    margin-top: 8px;
+}
+
+.goldLine {
+    width: 32px;
+    height: 0.5px;
+    background: #9a7c4f;
+    margin: 12px auto 0;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 0;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 32px;
+}
+
+.sidebar {
+    border-right: 0.5px solid #e8e0d4;
+    padding-right: 32px;
+}
+
+.avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #f0ece6;
+    border: 0.5px solid #d8d0c4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-family: Georgia, serif;
+    color: #9a7c4f;
+    margin-bottom: 14px;
+}
+
+.userName {
+    font-size: 14px;
+    color: #1a1a1a;
+    font-family: Georgia, serif;
+    margin-bottom: 4px;
+}
+
+.userEmail {
+    font-size: 11px;
+    color: #9a8a78;
+    letter-spacing: 0.5px;
+    margin-bottom: 28px;
+}
+
+.menuItem {
+    display: block;
+    padding: 10px 0;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #9a8a78;
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-align: left;
+    width: 100%;
+    transition: color 0.2s;
+}
+
+.menuItem:hover { color: #9a7c4f; }
+.menuActive { color: #9a7c4f; font-weight: 500; }
+
+.menuDivider {
+    height: 0.5px;
+    background: #e8e0d4;
+    margin: 12px 0;
+}
+
+.logout { color: #a32d2d !important; }
+.logout:hover { color: #791f1f !important; }
+
+.content { padding-left: 48px; }
+
+.success {
+    font-size: 12px;
+    color: #27500A;
+    background: #EAF3DE;
+    border: 0.5px solid #97C459;
+    padding: 10px 14px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.error {
+    font-size: 12px;
+    color: #791F1F;
+    background: #FCEBEB;
+    border: 0.5px solid #F09595;
+    padding: 10px 14px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.sectionTitle {
+    font-size: 14px;
+    font-weight: 400;
+    color: #1a1a1a;
+    font-family: Georgia, serif;
+    letter-spacing: 3px;
+}
+
+.sectionDivider {
+    width: 24px;
+    height: 0.5px;
+    background: #9a7c4f;
+    margin: 10px 0 24px;
+}
+
+.field { margin-bottom: 20px; }
+
+.fieldLabel {
+    font-size: 10px;
+    color: #9a8a78;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.fieldInput {
+    width: 100%;
+    background: white;
+    border: 0.5px solid #d8d0c4;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #1a1a1a;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.fieldInput:focus { border-color: #9a7c4f; }
+.fieldInput:disabled { background: #f8f6f2; color: #9a8a78; cursor: not-allowed; }
+
+.fieldRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.saveBtn {
+    height: 44px;
+    padding: 0 32px;
+    background: transparent;
+    color: #9a7c4f;
+    border: 0.5px solid #9a7c4f;
+    font-size: 11px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+}
+
+.saveBtn:hover { background: #9a7c4f; color: white; }
+
+.cancelBtn {
+    height: 44px;
+    padding: 0 32px;
+    background: transparent;
+    color: #9a8a78;
+    border: 0.5px solid #d8d0c4;
+    font-size: 11px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+}
+
+.cancelBtn:hover { border-color: #9a7c4f; color: #9a7c4f; }
+
+.addressCard {
+    background: white;
+    border: 0.5px solid #e8e0d4;
+    padding: 20px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.addressLabel {
+    font-size: 10px;
+    color: #9a8a78;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.addressInfo {
+    font-size: 13px;
+    color: #1a1a1a;
+    line-height: 1.8;
+}
+
+.addressActions { display: flex; gap: 12px; }
+
+.addrBtn {
+    font-size: 10px;
+    color: #bbb;
+    background: none;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+}
+
+.addrBtn:hover { color: #a32d2d; }
+
+.addressForm {
+    background: white;
+    border: 0.5px solid #e8e0d4;
+    padding: 24px;
+    margin-top: 12px;
+}
+
+.addAddressBtn {
+    width: 100%;
+    height: 44px;
+    background: transparent;
+    color: #9a7c4f;
+    border: 0.5px solid #9a7c4f;
+    font-size: 11px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s;
+}
+
+.addAddressBtn:hover { background: #9a7c4f; color: white; }
+
+.orderItem {
+    background: white;
+    border: 0.5px solid #e8e0d4;
+    padding: 20px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.orderId {
+    font-size: 11px;
+    color: #9a8a78;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.orderDate {
+    font-size: 13px;
+    color: #1a1a1a;
+    font-family: Georgia, serif;
+    margin-bottom: 4px;
+}
+
+.orderCount {
+    font-size: 11px;
+    color: #9a8a78;
+}
+
+.orderRight { text-align: right; }
+
+.orderTotal {
+    font-size: 16px;
+    color: #9a7c4f;
+    font-family: Georgia, serif;
+    margin-bottom: 8px;
+}
+
+.orderStatus {
+    font-size: 10px;
+    padding: 3px 10px;
+    letter-spacing: 1px;
+}
+
+.statusPaid      { background: #EAF3DE; color: #27500A; }
+.statusPending   { background: #FAEEDA; color: #633806; }
+.statusShipped   { background: #E6F1FB; color: #0C447C; }
+.statusDelivered { background: #E1F5EE; color: #085041; }
+.statusCancelled { background: #FCEBEB; color: #791F1F; }
+
+.empty {
+    font-size: 11px;
+    color: #9a8a78;
+    letter-spacing: 2px;
+    text-align: center;
+    padding: 40px 0;
+}
+
+@media (max-width: 768px) {
+    .layout {
+        grid-template-columns: 1fr;
+        padding: 0 16px;
+    }
+
+    .sidebar {
+        border-right: none;
+        border-bottom: 0.5px solid #e8e0d4;
+        padding-right: 0;
+        padding-bottom: 24px;
+        margin-bottom: 24px;
+    }
+
+    .content { padding-left: 0; }
+
+    .fieldRow { grid-template-columns: 1fr; }
+}

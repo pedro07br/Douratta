@@ -1,0 +1,24 @@
+-- AlterTable
+ALTER TABLE `User` ADD COLUMN `cpf` VARCHAR(191) NULL,
+    ADD COLUMN `phone` VARCHAR(191) NULL;
+
+-- CreateTable
+CREATE TABLE `Address` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `label` VARCHAR(191) NOT NULL DEFAULT 'PRINCIPAL',
+    `street` VARCHAR(191) NOT NULL,
+    `number` VARCHAR(191) NOT NULL,
+    `complement` VARCHAR(191) NULL,
+    `district` VARCHAR(191) NOT NULL,
+    `city` VARCHAR(191) NOT NULL,
+    `state` VARCHAR(191) NOT NULL,
+    `zipCode` VARCHAR(191) NOT NULL,
+    `isMain` BOOLEAN NOT NULL DEFAULT false,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `userId` INTEGER NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `Address` ADD CONSTRAINT `Address_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

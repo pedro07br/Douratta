@@ -21,6 +21,7 @@ export default function Navbar() {
         <Link href="/contato" className={styles.navLink}>
           CONTATO
         </Link>
+        <Link href="/perfil" className={styles.navLink}>MINHA CONTA</Link>
 
         <button className={styles.cartPill} onClick={() => setIsOpen(true)}>
           CARRINHO · {count}
