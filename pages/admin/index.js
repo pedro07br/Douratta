@@ -64,7 +64,10 @@ export default function Admin({ user }) {
 
   useEffect(() => {
     if (panel === "dashboard") fetchDashboard();
-    if (panel === "produtos") fetchProducts();
+    if (panel === "produtos") {
+      fetchProducts();
+      fetchCategories();
+    }
     if (panel === "pedidos") fetchOrders();
     if (panel === "categorias") {
       fetchCategories();
@@ -80,6 +83,11 @@ export default function Admin({ user }) {
     }).format(v);
 
   const handleSaveProduct = async () => {
+    if (!productForm.categoryId) {
+      alert("Selecione uma categoria!");
+      return;
+    }
+
     const slugGerado =
       productForm.slug ||
       productForm.name
@@ -503,12 +511,42 @@ export default function Admin({ user }) {
                         onChange={async (e) => {
                           const file = e.target.files[0];
                           if (!file) return;
+
+                          // Reduz a imagem antes de enviar
                           const reader = new FileReader();
-                          reader.onload = () =>
-                            setProductForm({
-                              ...productForm,
-                              imageUrl: reader.result,
-                            });
+                          reader.onload = (event) => {
+                            const img = new Image();
+                            img.onload = () => {
+                              const canvas = document.createElement("canvas");
+                              const maxSize = 800;
+                              let width = img.width;
+                              let height = img.height;
+
+                              if (width > height && width > maxSize) {
+                                height = (height * maxSize) / width;
+                                width = maxSize;
+                              } else if (height > maxSize) {
+                                width = (width * maxSize) / height;
+                                height = maxSize;
+                              }
+
+                              canvas.width = width;
+                              canvas.height = height;
+                              canvas
+                                .getContext("2d")
+                                .drawImage(img, 0, 0, width, height);
+
+                              const compressed = canvas.toDataURL(
+                                "image/jpeg",
+                                0.7,
+                              );
+                              setProductForm({
+                                ...productForm,
+                                imageUrl: compressed,
+                              });
+                            };
+                            img.src = event.target.result;
+                          };
                           reader.readAsDataURL(file);
                         }}
                       />

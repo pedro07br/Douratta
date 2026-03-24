@@ -11,6 +11,14 @@ async function checkAdmin(req, res) {
   return user
 }
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb'
+    }
+  }
+}
+
 export default async function handler(req, res) {
   try {
     await checkAdmin(req, res)
