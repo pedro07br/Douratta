@@ -1,8 +1,8 @@
-import Link from 'next/link'
-import Navbar from '../src/components/Navbar/Navbar'
-import ProductCard from '../src/components/productCard/ProductCard'
-import styles from '../src/components/Home/Home.module.css'
-import prisma from '../services/prisma'
+import Link from "next/link";
+import Navbar from "../src/components/Navbar/Navbar";
+import ProductCard from "../src/components/productCard/ProductCard";
+import styles from "../src/components/Home/Home.module.css";
+import prisma from "../services/prisma";
 
 export default function Home({ featured, categories }) {
   return (
@@ -14,9 +14,15 @@ export default function Home({ featured, categories }) {
         <div className={styles.heroBg} />
         <div className={styles.heroContent}>
           <div className={styles.heroTag}>NOVA COLEÇÃO 2026</div>
-          <h1 className={styles.heroTitle}>ARTE EM<br />OURO PURO</h1>
+          <h1 className={styles.heroTitle}>
+            ARTE EM
+            <br />
+            OURO PURO
+          </h1>
           <div className={styles.heroDivider} />
-          <p className={styles.heroSub}>JOIAS EXCLUSIVAS · FEITAS À MÃO · OURO 18K</p>
+          <p className={styles.heroSub}>
+            JOIAS EXCLUSIVAS · FEITAS À MÃO · OURO 18K
+          </p>
           <div className={styles.heroBtns}>
             <Link href="/produtos">
               <button className={styles.btnPrimary}>VER COLEÇÃO</button>
@@ -36,17 +42,59 @@ export default function Home({ featured, categories }) {
           <div className={styles.sectionLine} />
         </div>
         <div className={styles.catGrid}>
-          {categories.map(cat => (
-            <Link key={cat.id} href={`/produtos?categoria=${cat.slug}`} style={{ textDecoration: 'none' }}>
+          {categories.map((cat) => (
+            <Link
+              key={cat.id}
+              href={`/produtos?categoria=${cat.slug}`}
+              style={{ textDecoration: "none" }}
+            >
               <div className={styles.catCard}>
-                <div className={styles.catIcon}>
-                  <svg width="60" height="60" viewBox="0 0 60 60">
-                    <circle cx="30" cy="30" r="22" fill="none" stroke="#9a7c4f" strokeWidth="1"/>
-                    <circle cx="30" cy="30" r="10" fill="#c9a96e" fillOpacity="0.3"/>
-                  </svg>
+                {cat.imageUrl ? (
+                  <img
+                    src={cat.imageUrl}
+                    alt={cat.name}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      opacity: 0.6,
+                    }}
+                  />
+                ) : (
+                  <div className={styles.catIcon}>
+                    <svg width="60" height="60" viewBox="0 0 60 60">
+                      <circle
+                        cx="30"
+                        cy="30"
+                        r="22"
+                        fill="none"
+                        stroke="#9a7c4f"
+                        strokeWidth="1"
+                      />
+                      <circle
+                        cx="30"
+                        cy="30"
+                        r="10"
+                        fill="#c9a96e"
+                        fillOpacity="0.3"
+                      />
+                    </svg>
+                  </div>
+                )}
+                <div
+                  className={styles.catName}
+                  style={{ position: "relative" }}
+                >
+                  {cat.name.toUpperCase()}
                 </div>
-                <div className={styles.catName}>{cat.name.toUpperCase()}</div>
-                <div className={styles.catCount}>{cat._count?.products || 0} peças</div>
+                <div
+                  className={styles.catCount}
+                  style={{ position: "relative" }}
+                >
+                  {cat._count?.products || 0} peças
+                </div>
               </div>
             </Link>
           ))}
@@ -61,7 +109,7 @@ export default function Home({ featured, categories }) {
           <div className={styles.sectionLine} />
         </div>
         <div className={styles.productsGrid}>
-          {featured.map(product => (
+          {featured.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
@@ -76,22 +124,29 @@ export default function Home({ featured, categories }) {
       <section className={styles.instSection}>
         <div className={styles.instContent}>
           <div className={styles.instTag}>NOSSA HISTÓRIA</div>
-          <h2 className={styles.instTitle}>TRADIÇÃO E<br />ELEGÂNCIA<br />EM CADA PEÇA</h2>
+          <h2 className={styles.instTitle}>
+            TRADIÇÃO E<br />
+            ELEGÂNCIA
+            <br />
+            EM CADA PEÇA
+          </h2>
           <div className={styles.instDivider} />
           <p className={styles.instText}>
-            A Douratta nasceu da paixão por joias que transcendem o tempo. Cada peça é criada com dedicação artesanal, utilizando ouro 18k e pedras preciosas certificadas, para que você carregue consigo uma história única.
+            A Douratta nasceu da paixão por joias que transcendem o tempo. Cada
+            peça é criada com dedicação artesanal, utilizando ouro 18k e pedras
+            preciosas certificadas, para que você carregue consigo uma história
+            única.
           </p>
           <Link href="/sobre">
             <button className={styles.instBtn}>CONHECER A MARCA</button>
           </Link>
         </div>
         <div className={styles.instImg}>
-          <svg width="120" height="120" viewBox="0 0 120 120" opacity="0.3">
-            <circle cx="60" cy="60" r="50" fill="none" stroke="#c9a96e" strokeWidth="0.5"/>
-            <circle cx="60" cy="60" r="35" fill="none" stroke="#c9a96e" strokeWidth="0.5"/>
-            <circle cx="60" cy="60" r="20" fill="none" stroke="#c9a96e" strokeWidth="0.5"/>
-            <circle cx="60" cy="60" r="8" fill="#c9a96e" fillOpacity="0.3"/>
-          </svg>
+          <img
+            src="/img/colar.jpg"
+            alt="Joia artesanal"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
         </div>
       </section>
 
@@ -99,13 +154,15 @@ export default function Home({ featured, categories }) {
       <section className={styles.promo}>
         <div className={styles.promoTag}>OFERTA ESPECIAL</div>
         <h2 className={styles.promoTitle}>FRETE GRÁTIS</h2>
-        <p className={styles.promoSub}>EM COMPRAS ACIMA DE R$ 500 · VÁLIDO ATÉ 31/03</p>
+        <p className={styles.promoSub}>
+          EM COMPRAS ACIMA DE R$ 500 · VÁLIDO ATÉ 31/03
+        </p>
         <Link href="/produtos">
           <button className={styles.promoBtn}>APROVEITAR AGORA</button>
         </Link>
       </section>
     </div>
-  )
+  );
 }
 
 export const getServerSideProps = async () => {
@@ -113,24 +170,24 @@ export const getServerSideProps = async () => {
     prisma.product.findMany({
       where: { active: true },
       include: { category: true },
-      orderBy: { createdAt: 'desc' },
-      take: 4
+      orderBy: { createdAt: "desc" },
+      take: 4,
     }),
     prisma.category.findMany({
       include: { _count: { select: { products: true } } },
-      orderBy: { name: 'asc' }
-    })
-  ])
+      orderBy: { name: "asc" },
+    }),
+  ]);
 
-  const featured = featuredRaw.map(p => ({
+  const featured = featuredRaw.map((p) => ({
     ...p,
-    price: Number(p.price) // 🔥 ESSA LINHA RESOLVE
-  }))
+    price: Number(p.price),
+  }));
 
   return {
     props: {
       featured: JSON.parse(JSON.stringify(featured)),
-      categories: JSON.parse(JSON.stringify(categories))
-    }
-  }
-}
+      categories: JSON.parse(JSON.stringify(categories)),
+    },
+  };
+};

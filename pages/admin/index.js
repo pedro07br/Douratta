@@ -17,10 +17,20 @@ export default function Admin({ user }) {
   const [showProductForm, setShowProductForm] = useState(false);
   const [showCategoryForm, setShowCategoryForm] = useState(false);
   const [productForm, setProductForm] = useState({
-    name: "", slug: "", description: "", price: "",
-    stock: "", imageUrl: "", active: true, categoryId: "",
+    name: "",
+    slug: "",
+    description: "",
+    price: "",
+    stock: "",
+    imageUrl: "",
+    active: true,
+    categoryId: "",
   });
-  const [categoryForm, setCategoryForm] = useState({ name: "", slug: "" });
+  const [categoryForm, setCategoryForm] = useState({
+    name: "",
+    slug: "",
+    imageUrl: "",
+  });
 
   const fetchDashboard = async () => {
     const res = await fetch("/api/admin/dashboard");
@@ -53,28 +63,61 @@ export default function Admin({ user }) {
   };
 
   useEffect(() => {
-    if (panel === "dashboard")  fetchDashboard();
-    if (panel === "produtos")   fetchProducts();
-    if (panel === "pedidos")    fetchOrders();
-    if (panel === "categorias") fetchCategories();
-    if (panel === "usuarios")   fetchUsuarios();
+    if (panel === "dashboard") fetchDashboard();
+    if (panel === "produtos") fetchProducts();
+    if (panel === "pedidos") fetchOrders();
+    if (panel === "categorias") {
+      fetchCategories();
+      fetchProducts();
+    }
+    if (panel === "usuarios") fetchUsuarios();
   }, [panel]);
 
-  const formatted = (v) => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(v);
+  const formatted = (v) =>
+    new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(v);
 
   const handleSaveProduct = async () => {
+    const slugGerado =
+      productForm.slug ||
+      productForm.name
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-");
+
     const method = editProduct ? "PUT" : "POST";
-    const body = editProduct ? { ...productForm, id: editProduct.id } : productForm;
+    const body = editProduct
+      ? { ...productForm, slug: slugGerado, id: editProduct.id }
+      : { ...productForm, slug: slugGerado };
+
     const res = await fetch("/api/admin/produtos", {
       method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
+
     if (res.ok) {
       setEditProduct(null);
       setShowProductForm(false);
-      setProductForm({ name: "", slug: "", description: "", price: "", stock: "", imageUrl: "", active: true, categoryId: "" });
+      setProductForm({
+        name: "",
+        slug: "",
+        description: "",
+        price: "",
+        stock: "",
+        imageUrl: "",
+        active: true,
+        categoryId: "",
+      });
       fetchProducts();
+    } else {
+      const data = await res.json();
+      alert(data.message);
     }
   };
 
@@ -99,8 +142,21 @@ export default function Admin({ user }) {
   };
 
   const handleSaveCategory = async () => {
+    const slugGerado =
+      categoryForm.slug ||
+      categoryForm.name
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-");
+
     const method = editCategory ? "PUT" : "POST";
-    const body = editCategory ? { ...categoryForm, id: editCategory.id } : categoryForm;
+    const body = editCategory
+      ? { ...categoryForm, slug: slugGerado, id: editCategory.id }
+      : { ...categoryForm, slug: slugGerado };
+
     await fetch("/api/admin/categorias", {
       method,
       headers: { "Content-Type": "application/json" },
@@ -108,7 +164,7 @@ export default function Admin({ user }) {
     });
     setEditCategory(null);
     setShowCategoryForm(false);
-    setCategoryForm({ name: "", slug: "" });
+    setCategoryForm({ name: "", slug: "", imageUrl: "" });
     fetchCategories();
   };
 
@@ -145,24 +201,33 @@ export default function Admin({ user }) {
   const openEditProduct = (p) => {
     setEditProduct(p);
     setProductForm({
-      name: p.name, slug: p.slug, description: p.description,
-      price: p.price, stock: p.stock, imageUrl: p.imageUrl || "",
-      active: p.active, categoryId: p.categoryId,
+      name: p.name,
+      slug: p.slug,
+      description: p.description,
+      price: p.price,
+      stock: p.stock,
+      imageUrl: p.imageUrl || "",
+      active: p.active,
+      categoryId: p.categoryId,
     });
     setShowProductForm(true);
   };
 
   const statusLabel = {
-    PENDING: "PENDENTE", PAID: "PAGO", SHIPPED: "ENVIADO",
-    DELIVERED: "ENTREGUE", CANCELLED: "CANCELADO",
+    PENDING: "PENDENTE",
+    PAID: "PAGO",
+    SHIPPED: "ENVIADO",
+    DELIVERED: "ENTREGUE",
+    CANCELLED: "CANCELADO",
   };
 
   const statusStyle = {
-    PENDING: styles.statusPending, PAID: styles.statusPaid,
-    SHIPPED: styles.statusShipped, DELIVERED: styles.statusDelivered,
+    PENDING: styles.statusPending,
+    PAID: styles.statusPaid,
+    SHIPPED: styles.statusShipped,
+    DELIVERED: styles.statusDelivered,
     CANCELLED: styles.statusCancelled,
   };
-
 
   return (
     <div className={styles.page}>
@@ -699,10 +764,11 @@ export default function Admin({ user }) {
                       />
                     </div>
                     <div className={styles.field}>
-                      <div className={styles.fieldLabel}>SLUG</div>
+                      <div className={styles.fieldLabel}>SLUG (opcional)</div>
                       <input
                         className={styles.fieldInput}
                         value={categoryForm.slug}
+                        placeholder="gerado automaticamente"
                         onChange={(e) =>
                           setCategoryForm({
                             ...categoryForm,
@@ -710,6 +776,43 @@ export default function Admin({ user }) {
                           })
                         }
                       />
+                    </div>
+                    <div className={styles.field}>
+                      <div className={styles.fieldLabel}>
+                        IMAGEM — SELECIONE UM PRODUTO
+                      </div>
+                      <select
+                        className={styles.fieldInput}
+                        value={categoryForm.imageUrl}
+                        onChange={(e) =>
+                          setCategoryForm({
+                            ...categoryForm,
+                            imageUrl: e.target.value,
+                          })
+                        }
+                      >
+                        <option value="">Sem imagem</option>
+                        {products
+                          .filter((p) => p.imageUrl)
+                          .map((p) => (
+                            <option key={p.id} value={p.imageUrl}>
+                              {p.name}
+                            </option>
+                          ))}
+                      </select>
+                      {categoryForm.imageUrl && (
+                        <img
+                          src={categoryForm.imageUrl}
+                          alt="preview"
+                          style={{
+                            width: 80,
+                            height: 80,
+                            objectFit: "cover",
+                            marginTop: 8,
+                            border: "0.5px solid #e8e0d4",
+                          }}
+                        />
+                      )}
                     </div>
                   </div>
                   <div className={styles.formActions}>
@@ -752,7 +855,11 @@ export default function Admin({ user }) {
                           className={styles.actionBtn}
                           onClick={() => {
                             setEditCategory(c);
-                            setCategoryForm({ name: c.name, slug: c.slug });
+                            setCategoryForm({
+                              name: c.name,
+                              slug: c.slug,
+                              imageUrl: c.imageUrl || "",
+                            });
                             setShowCategoryForm(true);
                           }}
                         >

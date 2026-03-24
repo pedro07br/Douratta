@@ -135,6 +135,7 @@ exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
   slug: 'slug',
+  imageUrl: 'imageUrl',
   createdAt: 'createdAt'
 };
 
@@ -224,7 +225,8 @@ exports.Prisma.UserOrderByRelevanceFieldEnum = {
 
 exports.Prisma.CategoryOrderByRelevanceFieldEnum = {
   name: 'name',
-  slug: 'slug'
+  slug: 'slug',
+  imageUrl: 'imageUrl'
 };
 
 exports.Prisma.ProductOrderByRelevanceFieldEnum = {

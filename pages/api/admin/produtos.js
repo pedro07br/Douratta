@@ -66,6 +66,7 @@ export default async function handler(req, res) {
 
     res.status(405).json({ message: 'Método não permitido' })
   } catch (error) {
-    res.status(error.message === 'Não autorizado' ? 401 : 500).json({ message: error.message })
+  console.error('ERRO PRODUTOS API:', error)
+  res.status(500).json({ message: error.message, detail: error.toString() })
   }
 }

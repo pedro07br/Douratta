@@ -2874,6 +2874,7 @@ export namespace Prisma {
     id: number | null
     name: string | null
     slug: string | null
+    imageUrl: string | null
     createdAt: Date | null
   }
 
@@ -2881,6 +2882,7 @@ export namespace Prisma {
     id: number | null
     name: string | null
     slug: string | null
+    imageUrl: string | null
     createdAt: Date | null
   }
 
@@ -2888,6 +2890,7 @@ export namespace Prisma {
     id: number
     name: number
     slug: number
+    imageUrl: number
     createdAt: number
     _all: number
   }
@@ -2905,6 +2908,7 @@ export namespace Prisma {
     id?: true
     name?: true
     slug?: true
+    imageUrl?: true
     createdAt?: true
   }
 
@@ -2912,6 +2916,7 @@ export namespace Prisma {
     id?: true
     name?: true
     slug?: true
+    imageUrl?: true
     createdAt?: true
   }
 
@@ -2919,6 +2924,7 @@ export namespace Prisma {
     id?: true
     name?: true
     slug?: true
+    imageUrl?: true
     createdAt?: true
     _all?: true
   }
@@ -3013,6 +3019,7 @@ export namespace Prisma {
     id: number
     name: string
     slug: string
+    imageUrl: string | null
     createdAt: Date
     _count: CategoryCountAggregateOutputType | null
     _avg: CategoryAvgAggregateOutputType | null
@@ -3039,6 +3046,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     slug?: boolean
+    imageUrl?: boolean
     createdAt?: boolean
     products?: boolean | Category$productsArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -3050,10 +3058,11 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     slug?: boolean
+    imageUrl?: boolean
     createdAt?: boolean
   }
 
-  export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "createdAt", ExtArgs["result"]["category"]>
+  export type CategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "imageUrl" | "createdAt", ExtArgs["result"]["category"]>
   export type CategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     products?: boolean | Category$productsArgs<ExtArgs>
     _count?: boolean | CategoryCountOutputTypeDefaultArgs<ExtArgs>
@@ -3068,6 +3077,7 @@ export namespace Prisma {
       id: number
       name: string
       slug: string
+      imageUrl: string | null
       createdAt: Date
     }, ExtArgs["result"]["category"]>
     composites: {}
@@ -3442,6 +3452,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Category", 'Int'>
     readonly name: FieldRef<"Category", 'String'>
     readonly slug: FieldRef<"Category", 'String'>
+    readonly imageUrl: FieldRef<"Category", 'String'>
     readonly createdAt: FieldRef<"Category", 'DateTime'>
   }
     
@@ -10973,6 +10984,7 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     slug: 'slug',
+    imageUrl: 'imageUrl',
     createdAt: 'createdAt'
   };
 
@@ -11095,7 +11107,8 @@ export namespace Prisma {
 
   export const CategoryOrderByRelevanceFieldEnum: {
     name: 'name',
-    slug: 'slug'
+    slug: 'slug',
+    imageUrl: 'imageUrl'
   };
 
   export type CategoryOrderByRelevanceFieldEnum = (typeof CategoryOrderByRelevanceFieldEnum)[keyof typeof CategoryOrderByRelevanceFieldEnum]
@@ -11278,6 +11291,7 @@ export namespace Prisma {
     id?: IntFilter<"Category"> | number
     name?: StringFilter<"Category"> | string
     slug?: StringFilter<"Category"> | string
+    imageUrl?: StringNullableFilter<"Category"> | string | null
     createdAt?: DateTimeFilter<"Category"> | Date | string
     products?: ProductListRelationFilter
   }
@@ -11286,6 +11300,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrder
+    imageUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     products?: ProductOrderByRelationAggregateInput
     _relevance?: CategoryOrderByRelevanceInput
@@ -11298,6 +11313,7 @@ export namespace Prisma {
     AND?: CategoryWhereInput | CategoryWhereInput[]
     OR?: CategoryWhereInput[]
     NOT?: CategoryWhereInput | CategoryWhereInput[]
+    imageUrl?: StringNullableFilter<"Category"> | string | null
     createdAt?: DateTimeFilter<"Category"> | Date | string
     products?: ProductListRelationFilter
   }, "id" | "name" | "slug">
@@ -11306,6 +11322,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrder
+    imageUrl?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: CategoryCountOrderByAggregateInput
     _avg?: CategoryAvgOrderByAggregateInput
@@ -11321,6 +11338,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Category"> | number
     name?: StringWithAggregatesFilter<"Category"> | string
     slug?: StringWithAggregatesFilter<"Category"> | string
+    imageUrl?: StringNullableWithAggregatesFilter<"Category"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Category"> | Date | string
   }
 
@@ -11892,6 +11910,7 @@ export namespace Prisma {
   export type CategoryCreateInput = {
     name: string
     slug: string
+    imageUrl?: string | null
     createdAt?: Date | string
     products?: ProductCreateNestedManyWithoutCategoryInput
   }
@@ -11900,6 +11919,7 @@ export namespace Prisma {
     id?: number
     name: string
     slug: string
+    imageUrl?: string | null
     createdAt?: Date | string
     products?: ProductUncheckedCreateNestedManyWithoutCategoryInput
   }
@@ -11907,6 +11927,7 @@ export namespace Prisma {
   export type CategoryUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     products?: ProductUpdateManyWithoutCategoryNestedInput
   }
@@ -11915,6 +11936,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     products?: ProductUncheckedUpdateManyWithoutCategoryNestedInput
   }
@@ -11923,12 +11945,14 @@ export namespace Prisma {
     id?: number
     name: string
     slug: string
+    imageUrl?: string | null
     createdAt?: Date | string
   }
 
   export type CategoryUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -11936,6 +11960,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -12632,6 +12657,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrder
+    imageUrl?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -12643,6 +12669,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrder
+    imageUrl?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -12650,6 +12677,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrder
+    imageUrl?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -14149,6 +14177,7 @@ export namespace Prisma {
   export type CategoryCreateWithoutProductsInput = {
     name: string
     slug: string
+    imageUrl?: string | null
     createdAt?: Date | string
   }
 
@@ -14156,6 +14185,7 @@ export namespace Prisma {
     id?: number
     name: string
     slug: string
+    imageUrl?: string | null
     createdAt?: Date | string
   }
 
@@ -14243,6 +14273,7 @@ export namespace Prisma {
   export type CategoryUpdateWithoutProductsInput = {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -14250,6 +14281,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

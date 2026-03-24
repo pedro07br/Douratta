@@ -32,6 +32,7 @@ model Category {
   id        Int       @id @default(autoincrement())
   name      String    @unique
   slug      String    @unique
+  imageUrl  String?   @db.LongText
   createdAt DateTime  @default(now())
 
   products  Product[]

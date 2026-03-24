@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { useCart } from '../../context/CartContext'
-import { getCookie } from 'cookies-next'
 import { useEffect, useState } from 'react'
 import styles from './Navbar.module.css'
 
