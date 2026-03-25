@@ -168,7 +168,7 @@ export default function Home({ featured, categories }) {
 export const getServerSideProps = async () => {
   const [featuredRaw, categories] = await Promise.all([
     prisma.product.findMany({
-      where: { active: true },
+      where: { active: true, stock: { gt: 0 } },
       include: { category: true },
       orderBy: { createdAt: "desc" },
       take: 4,

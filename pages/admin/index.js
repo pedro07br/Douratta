@@ -6,6 +6,7 @@ import styles from "../../src/components/Admin/Admin.module.css";
 export default function Admin({ user }) {
   const router = useRouter();
   const [panel, setPanel] = useState("dashboard");
+  const [separacao, setSeparacao] = useState([]);
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -62,6 +63,21 @@ export default function Admin({ user }) {
     setUsuarios(data);
   };
 
+  const fetchSeparacao = async () => {
+    const res = await fetch("/api/admin/separacao");
+    const data = await res.json();
+    setSeparacao(data);
+  };
+
+  const handleSeparacaoStatus = async (id, status) => {
+    await fetch("/api/admin/separacao", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, status }),
+    });
+    fetchSeparacao();
+  };
+
   useEffect(() => {
     if (panel === "dashboard") fetchDashboard();
     if (panel === "produtos") {
@@ -69,6 +85,7 @@ export default function Admin({ user }) {
       fetchCategories();
     }
     if (panel === "pedidos") fetchOrders();
+    if (panel === "separacao") fetchSeparacao();
     if (panel === "categorias") {
       fetchCategories();
       fetchProducts();
@@ -128,7 +145,6 @@ export default function Admin({ user }) {
       alert(data.message);
     }
   };
-
   const handleDeleteProduct = async (id) => {
     if (!confirm("Remover produto?")) return;
     await fetch("/api/admin/produtos", {
@@ -260,25 +276,31 @@ export default function Admin({ user }) {
 
       <div className={styles.layout}>
         <div className={styles.sidebar}>
-          {["dashboard", "produtos", "pedidos", "usuarios", "categorias"].map(
-            (p) => (
-              <button
-                key={p}
-                className={`${styles.menuItem} ${panel === p ? styles.menuActive : ""}`}
-                onClick={() => setPanel(p)}
-              >
+          {[
+            "dashboard",
+            "produtos",
+            "pedidos",
+            "separacao",
+            "usuarios",
+            "categorias",
+          ].map((p) => (
+            <button
+              key={p}
+              className={`${styles.menuItem} ${panel === p ? styles.menuActive : ""}`}
+              onClick={() => setPanel(p)}
+            >
+              {
                 {
-                  {
-                    dashboard: "DASHBOARD",
-                    produtos: "PRODUTOS",
-                    pedidos: "PEDIDOS",
-                    usuarios: "USUÁRIOS",
-                    categorias: "CATEGORIAS",
-                  }[p]
-                }
-              </button>
-            ),
-          )}
+                  dashboard: "DASHBOARD",
+                  produtos: "PRODUTOS",
+                  pedidos: "PEDIDOS",
+                  separacao: "SEPARAÇÃO",
+                  usuarios: "USUÁRIOS",
+                  categorias: "CATEGORIAS",
+                }[p]
+              }
+            </button>
+          ))}
         </div>
 
         <div className={styles.content}>
@@ -654,6 +676,141 @@ export default function Admin({ user }) {
                   ))}
                 </tbody>
               </table>
+            </div>
+          )}
+
+          {panel === "separacao" && (
+            <div>
+              <div className={styles.panelHeader}>
+                <div className={styles.panelTitle}>SEPARAÇÃO DE PEDIDOS</div>
+              </div>
+
+              {separacao.length === 0 ? (
+                <div className={styles.empty}>
+                  NENHUM PEDIDO PENDENTE OU PAGO
+                </div>
+              ) : (
+                separacao.map((order) => (
+                  <div key={order.id} className={styles.sepCard}>
+                    <div className={styles.sepHeader}>
+                      <div>
+                        <span className={styles.sepNum}>
+                          PEDIDO #{String(order.id).padStart(3, "0")}
+                        </span>
+                        <span
+                          className={`${styles.statusBadge} ${statusStyle[order.status]}`}
+                          style={{ marginLeft: 12 }}
+                        >
+                          {statusLabel[order.status]}
+                        </span>
+                      </div>
+                      <div className={styles.sepDate}>
+                        {new Date(order.createdAt).toLocaleDateString("pt-BR")}
+                      </div>
+                    </div>
+
+                    <div className={styles.sepClient}>
+                      <span className={styles.fieldLabel}>CLIENTE</span>
+                      <span>
+                        {order.user?.name} · {order.user?.email}
+                      </span>
+                    </div>
+
+                    {order.address && (
+                      <div className={styles.sepAddress}>
+                        <span className={styles.fieldLabel}>ENDEREÇO</span>
+                        <span>
+                          {order.address.street}, {order.address.number}
+                          {order.address.complement
+                            ? ` — ${order.address.complement}`
+                            : ""}
+                          · {order.address.district} · {order.address.city}/
+                          {order.address.state}· CEP {order.address.zipCode}
+                        </span>
+                      </div>
+                    )}
+
+                    <div className={styles.sepItems}>
+                      <div
+                        className={styles.fieldLabel}
+                        style={{ marginBottom: 8 }}
+                      >
+                        ITENS
+                      </div>
+                      {order.items.map((item) => (
+                        <div key={item.id} className={styles.sepItem}>
+                          <div className={styles.sepItemImg}>
+                            {item.product?.imageUrl ? (
+                              <img
+                                src={item.product.imageUrl}
+                                alt={item.product.name}
+                                style={{
+                                  width: "100%",
+                                  height: "100%",
+                                  objectFit: "cover",
+                                }}
+                              />
+                            ) : (
+                              <svg width="40" height="40" viewBox="0 0 40 40">
+                                <circle
+                                  cx="20"
+                                  cy="20"
+                                  r="14"
+                                  fill="none"
+                                  stroke="#9a7c4f"
+                                  strokeWidth="1"
+                                />
+                                <circle
+                                  cx="20"
+                                  cy="20"
+                                  r="5"
+                                  fill="#c9a96e"
+                                  fillOpacity="0.5"
+                                />
+                              </svg>
+                            )}
+                          </div>
+                          <div className={styles.sepItemInfo}>
+                            <div className={styles.sepItemName}>
+                              {item.product?.name}
+                            </div>
+                            <div className={styles.sepItemQty}>
+                              Qtd: {item.quantity}
+                            </div>
+                          </div>
+                          <div className={styles.sepItemPrice}>
+                            {formatted(item.price)}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className={styles.sepTotal}>
+                      TOTAL: {formatted(order.total)}
+                    </div>
+
+                    <div className={styles.sepActions}>
+                      <button
+                        className={styles.saveBtn}
+                        onClick={() =>
+                          handleSeparacaoStatus(order.id, "SHIPPED")
+                        }
+                        disabled={order.status === "SHIPPED"}
+                      >
+                        ✓ MARCAR COMO ENVIADO
+                      </button>
+                      <button
+                        className={`${styles.actionBtn} ${styles.actionDel}`}
+                        onClick={() =>
+                          handleSeparacaoStatus(order.id, "CANCELLED")
+                        }
+                      >
+                        ✗ NEGAR PEDIDO
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           )}
 

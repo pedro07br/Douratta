@@ -311,3 +311,124 @@
     background: #EEEDFE;
     color: #3C3489;
 }
+
+.sepCard {
+    background: white;
+    border: 0.5px solid #e8e0d4;
+    padding: 24px;
+    margin-bottom: 16px;
+}
+
+.sepHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 0.5px solid #e8e0d4;
+}
+
+.sepNum {
+    font-size: 14px;
+    font-family: Georgia, serif;
+    color: #1a1a1a;
+    letter-spacing: 2px;
+}
+
+.sepDate {
+    font-size: 11px;
+    color: #9a8a78;
+    letter-spacing: 1px;
+}
+
+.sepClient {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: #1a1a1a;
+}
+
+.sepAddress {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: #1a1a1a;
+    background: #faf8f5;
+    padding: 12px;
+    border: 0.5px solid #e8e0d4;
+}
+
+.sepItems {
+    margin-bottom: 16px;
+}
+
+.sepItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 0.5px solid #f0ece6;
+}
+
+.sepItemImg {
+    width: 60px;
+    height: 60px;
+    background: #f5f2ee;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.sepItemInfo {
+    flex: 1;
+}
+
+.sepItemName {
+    font-size: 13px;
+    color: #1a1a1a;
+    font-family: Georgia, serif;
+    margin-bottom: 4px;
+}
+
+.sepItemQty {
+    font-size: 11px;
+    color: #9a8a78;
+    letter-spacing: 1px;
+}
+
+.sepItemPrice {
+    font-size: 13px;
+    color: #9a7c4f;
+    font-family: Georgia, serif;
+}
+
+.sepTotal {
+    text-align: right;
+    font-size: 14px;
+    font-family: Georgia, serif;
+    color: #1a1a1a;
+    letter-spacing: 2px;
+    padding-top: 12px;
+    border-top: 0.5px solid #e8e0d4;
+    margin-bottom: 16px;
+}
+
+.sepActions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.empty {
+    text-align: center;
+    padding: 48px;
+    font-size: 11px;
+    color: #9a8a78;
+    letter-spacing: 3px;
+}
