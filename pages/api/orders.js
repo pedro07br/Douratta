@@ -13,9 +13,7 @@ export default async function handler(req, res) {
     const user = await prisma.user.findUnique({ where: { email: decoded.email } })
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body
 
-    console.log('BODY RECEBIDO:', JSON.stringify(body))
-
-    // Valida estoque antes de criar o pedido
+    // Valida estoque
     for (const item of body.items) {
       const product = await prisma.product.findUnique({ where: { id: item.productId } })
       if (!product) return res.status(400).json({ message: `Produto ${item.productId} não encontrado` })
@@ -24,12 +22,46 @@ export default async function handler(req, res) {
       }
     }
 
-    // Cria o pedido com todos os itens
+    // Valida e aplica cupom
+    let couponId = null
+    let discount = 0
+    let finalTotal = parseFloat(body.total)
+
+    if (body.couponCode) {
+      const coupon = await prisma.coupon.findUnique({
+        where: { code: body.couponCode.toUpperCase() }
+      })
+
+      if (!coupon || !coupon.active || coupon.usedCount >= coupon.maxUses) {
+        return res.status(400).json({ message: 'Cupom inválido ou esgotado' })
+      }
+
+      couponId = coupon.id
+
+      if (coupon.type === 'PERCENTAGE') {
+        discount = finalTotal * (parseFloat(coupon.value) / 100)
+      } else if (coupon.type === 'FIXED') {
+        discount = parseFloat(coupon.value)
+      } else if (coupon.type === 'FREESHIP') {
+        discount = 0 // frete já é grátis, apenas registra
+      }
+
+      finalTotal = Math.max(0, finalTotal - discount)
+
+      // Incrementa uso do cupom
+      await prisma.coupon.update({
+        where: { id: coupon.id },
+        data: { usedCount: { increment: 1 } }
+      })
+    }
+
     const order = await prisma.order.create({
       data: {
-        total: parseFloat(body.total),
-        status: 'PENDING',
-        userId: user.id,
+        total:    finalTotal,
+        discount: discount > 0 ? discount : null,
+        status:   'PENDING',
+        userId:   user.id,
+        couponId: couponId,
         items: {
           create: body.items.map(i => ({
             productId: parseInt(i.productId),
@@ -41,7 +73,7 @@ export default async function handler(req, res) {
       include: { items: true }
     })
 
-    // Diminui o estoque de cada produto
+    // Diminui estoque
     for (const item of body.items) {
       await prisma.product.update({
         where: { id: parseInt(item.productId) },

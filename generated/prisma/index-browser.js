@@ -172,7 +172,9 @@ exports.Prisma.OrderScalarFieldEnum = {
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  userId: 'userId'
+  userId: 'userId',
+  couponId: 'couponId',
+  discount: 'discount'
 };
 
 exports.Prisma.OrderItemScalarFieldEnum = {
@@ -203,6 +205,26 @@ exports.Prisma.WishlistScalarFieldEnum = {
   createdAt: 'createdAt',
   userId: 'userId',
   productId: 'productId'
+};
+
+exports.Prisma.ReviewScalarFieldEnum = {
+  id: 'id',
+  rating: 'rating',
+  comment: 'comment',
+  createdAt: 'createdAt',
+  userId: 'userId',
+  productId: 'productId'
+};
+
+exports.Prisma.CouponScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  type: 'type',
+  value: 'value',
+  maxUses: 'maxUses',
+  usedCount: 'usedCount',
+  active: 'active',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -246,6 +268,14 @@ exports.Prisma.AddressOrderByRelevanceFieldEnum = {
   state: 'state',
   zipCode: 'zipCode'
 };
+
+exports.Prisma.ReviewOrderByRelevanceFieldEnum = {
+  comment: 'comment'
+};
+
+exports.Prisma.CouponOrderByRelevanceFieldEnum = {
+  code: 'code'
+};
 exports.Role = exports.$Enums.Role = {
   CUSTOMER: 'CUSTOMER',
   ADMIN: 'ADMIN'
@@ -259,6 +289,12 @@ exports.OrderStatus = exports.$Enums.OrderStatus = {
   CANCELLED: 'CANCELLED'
 };
 
+exports.CouponType = exports.$Enums.CouponType = {
+  PERCENTAGE: 'PERCENTAGE',
+  FIXED: 'FIXED',
+  FREESHIP: 'FREESHIP'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Category: 'Category',
@@ -268,7 +304,9 @@ exports.Prisma.ModelName = {
   Order: 'Order',
   OrderItem: 'OrderItem',
   Address: 'Address',
-  Wishlist: 'Wishlist'
+  Wishlist: 'Wishlist',
+  Review: 'Review',
+  Coupon: 'Coupon'
 };
 
 /**

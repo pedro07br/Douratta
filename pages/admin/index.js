@@ -27,6 +27,62 @@ export default function Admin({ user }) {
     active: true,
     categoryId: "",
   });
+
+  const [cupons, setCupons] = useState([]);
+  const [showCuponForm, setShowCuponForm] = useState(false);
+  const [editCupon, setEditCupon] = useState(null);
+  const [cuponForm, setCuponForm] = useState({
+    code: "",
+    type: "PERCENTAGE",
+    value: "",
+    maxUses: "",
+    active: true,
+  });
+
+  const fetchCupons = async () => {
+    const res = await fetch("/api/admin/cupons");
+    const data = await res.json();
+    setCupons(data);
+  };
+
+  const handleSaveCupon = async () => {
+    if (!cuponForm.code || !cuponForm.value || !cuponForm.maxUses) {
+      alert("Preencha todos os campos!");
+      return;
+    }
+    const method = editCupon ? "PUT" : "POST";
+    const body = editCupon ? { ...cuponForm, id: editCupon.id } : cuponForm;
+    const res = await fetch("/api/admin/cupons", {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (res.ok) {
+      setEditCupon(null);
+      setShowCuponForm(false);
+      setCuponForm({
+        code: "",
+        type: "PERCENTAGE",
+        value: "",
+        maxUses: "",
+        active: true,
+      });
+      fetchCupons();
+    } else {
+      const data = await res.json();
+      alert(data.message);
+    }
+  };
+
+  const handleDeleteCupon = async (id) => {
+    if (!confirm("Remover cupom?")) return;
+    await fetch("/api/admin/cupons", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+    fetchCupons();
+  };
   const [categoryForm, setCategoryForm] = useState({
     name: "",
     slug: "",
@@ -80,6 +136,7 @@ export default function Admin({ user }) {
 
   useEffect(() => {
     if (panel === "dashboard") fetchDashboard();
+    if (panel === "cupons") fetchCupons();
     if (panel === "produtos") {
       fetchProducts();
       fetchCategories();
@@ -281,6 +338,7 @@ export default function Admin({ user }) {
             "produtos",
             "pedidos",
             "separacao",
+            "cupons",
             "usuarios",
             "categorias",
           ].map((p) => (
@@ -295,6 +353,7 @@ export default function Admin({ user }) {
                   produtos: "PRODUTOS",
                   pedidos: "PEDIDOS",
                   separacao: "SEPARAÇÃO",
+                  cupons: "CUPONS",
                   usuarios: "USUÁRIOS",
                   categorias: "CATEGORIAS",
                 }[p]
@@ -916,6 +975,200 @@ export default function Admin({ user }) {
                         </tr>
                       )}
                     </>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {panel === "cupons" && (
+            <div>
+              <div className={styles.panelHeader}>
+                <div className={styles.panelTitle}>CUPONS</div>
+                <button
+                  className={styles.addBtn}
+                  onClick={() => {
+                    setEditCupon(null);
+                    setCuponForm({
+                      code: "",
+                      type: "PERCENTAGE",
+                      value: "",
+                      maxUses: "",
+                      active: true,
+                    });
+                    setShowCuponForm(true);
+                  }}
+                >
+                  + NOVO CUPOM
+                </button>
+              </div>
+
+              {showCuponForm && (
+                <div className={styles.formCard}>
+                  <div className={styles.formTitle}>
+                    {editCupon ? "EDITAR CUPOM" : "NOVO CUPOM"}
+                  </div>
+                  <div className={styles.formGrid}>
+                    <div className={styles.field}>
+                      <div className={styles.fieldLabel}>CÓDIGO</div>
+                      <input
+                        className={styles.fieldInput}
+                        value={cuponForm.code}
+                        placeholder="EX: DOURATTA10"
+                        onChange={(e) =>
+                          setCuponForm({
+                            ...cuponForm,
+                            code: e.target.value.toUpperCase(),
+                          })
+                        }
+                      />
+                    </div>
+                    <div className={styles.field}>
+                      <div className={styles.fieldLabel}>TIPO</div>
+                      <select
+                        className={styles.fieldInput}
+                        value={cuponForm.type}
+                        onChange={(e) =>
+                          setCuponForm({ ...cuponForm, type: e.target.value })
+                        }
+                      >
+                        <option value="PERCENTAGE">Porcentagem (%)</option>
+                        <option value="FIXED">Valor Fixo (R$)</option>
+                        <option value="FREESHIP">Frete Grátis</option>
+                      </select>
+                    </div>
+                    <div className={styles.field}>
+                      <div className={styles.fieldLabel}>
+                        {cuponForm.type === "PERCENTAGE"
+                          ? "PORCENTAGEM (%)"
+                          : cuponForm.type === "FIXED"
+                            ? "VALOR (R$)"
+                            : "VALOR (ignorado)"}
+                      </div>
+                      <input
+                        className={styles.fieldInput}
+                        type="number"
+                        value={cuponForm.value}
+                        disabled={cuponForm.type === "FREESHIP"}
+                        onChange={(e) =>
+                          setCuponForm({ ...cuponForm, value: e.target.value })
+                        }
+                      />
+                    </div>
+                    <div className={styles.field}>
+                      <div className={styles.fieldLabel}>LIMITE DE USOS</div>
+                      <input
+                        className={styles.fieldInput}
+                        type="number"
+                        min="1"
+                        value={cuponForm.maxUses}
+                        onChange={(e) =>
+                          setCuponForm({
+                            ...cuponForm,
+                            maxUses: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className={styles.formActions}>
+                    <label className={styles.checkLabel}>
+                      <input
+                        type="checkbox"
+                        checked={cuponForm.active}
+                        onChange={(e) =>
+                          setCuponForm({
+                            ...cuponForm,
+                            active: e.target.checked,
+                          })
+                        }
+                      />{" "}
+                      CUPOM ATIVO
+                    </label>
+                    <div style={{ display: "flex", gap: 10 }}>
+                      <button
+                        className={styles.cancelBtn}
+                        onClick={() => setShowCuponForm(false)}
+                      >
+                        CANCELAR
+                      </button>
+                      <button
+                        className={styles.saveBtn}
+                        onClick={handleSaveCupon}
+                      >
+                        SALVAR
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <table className={styles.table}>
+                <thead>
+                  <tr>
+                    <th>CÓDIGO</th>
+                    <th>TIPO</th>
+                    <th>VALOR</th>
+                    <th>USOS</th>
+                    <th>STATUS</th>
+                    <th>AÇÕES</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cupons.map((c) => (
+                    <tr key={c.id}>
+                      <td>
+                        <strong>{c.code}</strong>
+                      </td>
+                      <td>
+                        {c.type === "PERCENTAGE"
+                          ? "Porcentagem"
+                          : c.type === "FIXED"
+                            ? "Valor Fixo"
+                            : "Frete Grátis"}
+                      </td>
+                      <td>
+                        {c.type === "PERCENTAGE"
+                          ? `${c.value}%`
+                          : c.type === "FIXED"
+                            ? `R$ ${c.value}`
+                            : "—"}
+                      </td>
+                      <td>
+                        {c.usedCount} / {c.maxUses}
+                      </td>
+                      <td>
+                        <span
+                          className={`${styles.statusBadge} ${c.active ? styles.statusActive : styles.statusInactive}`}
+                        >
+                          {c.active ? "ATIVO" : "INATIVO"}
+                        </span>
+                      </td>
+                      <td>
+                        <button
+                          className={styles.actionBtn}
+                          onClick={() => {
+                            setEditCupon(c);
+                            setCuponForm({
+                              code: c.code,
+                              type: c.type,
+                              value: c.value,
+                              maxUses: c.maxUses,
+                              active: c.active,
+                            });
+                            setShowCuponForm(true);
+                          }}
+                        >
+                          EDITAR
+                        </button>
+                        <button
+                          className={`${styles.actionBtn} ${styles.actionDel}`}
+                          onClick={() => handleDeleteCupon(c.id)}
+                        >
+                          REMOVER
+                        </button>
+                      </td>
+                    </tr>
                   ))}
                 </tbody>
               </table>

@@ -5,6 +5,7 @@ import ProductCard from '../../src/components/productCard/ProductCard'
 import { useCart } from '../../src/context/CartContext'
 import styles from '../../src/components/ProductDetail/ProductDetail.module.css'
 import prisma from '../../services/prisma'
+import Reviews from '../../src/components/Reviews/Reviews'
 
 export default function ProdutoDetalhe({ product, related }) {
   const [quantity, setQuantity] = useState(1)
@@ -100,6 +101,9 @@ export default function ProdutoDetalhe({ product, related }) {
           </div>
         </div>
       )}
+
+      <Reviews productId={product.id} />
+
     </div>
   )
 }

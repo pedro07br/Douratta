@@ -21,6 +21,7 @@ model User {
   cart      Cart?
   addresses Address[]
   wishlist  Wishlist[]
+  reviews   Review[]
 }
 
 enum Role {
@@ -56,6 +57,7 @@ model Product {
   cartItems  CartItem[]
   orderItems OrderItem[]
   wishlist   Wishlist[]
+  reviews    Review[]
 }
 
 model Cart {
@@ -89,7 +91,10 @@ model Order {
   userId Int
   user   User @relation(fields: [userId], references: [id])
 
-  items OrderItem[]
+  items    OrderItem[]
+  couponId Int?
+  coupon   Coupon?     @relation(fields: [couponId], references: [id])
+  discount Decimal?    @db.Decimal(10, 2)
 }
 
 enum OrderStatus {
@@ -138,4 +143,36 @@ model Wishlist {
 
   productId Int
   product   Product @relation(fields: [productId], references: [id])
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  rating    Int // 1 a 5
+  comment   String   @db.Text
+  createdAt DateTime @default(now())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Coupon {
+  id        Int        @id @default(autoincrement())
+  code      String     @unique
+  type      CouponType
+  value     Decimal    @db.Decimal(10, 2)
+  maxUses   Int
+  usedCount Int        @default(0)
+  active    Boolean    @default(true)
+  createdAt DateTime   @default(now())
+
+  orders Order[]
+}
+
+enum CouponType {
+  PERCENTAGE
+  FIXED
+  FREESHIP
 }
