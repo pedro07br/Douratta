@@ -8,24 +8,22 @@ stages:
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
-    - nextjs-login/node_modules/
+    - node_modules/
 
 # INSTALA DEPENDÊNCIAS
 install:
   stage: install
   script:
-    - cd nextjs-login
     - npm ci
   artifacts:
     paths:
-      - nextjs-login/node_modules/
+      - node_modules/
     expire_in: 1 hour
 
 # TESTES
 test:
   stage: test
   script:
-    - cd nextjs-login
     - npm run lint || true
   dependencies:
     - install
@@ -34,15 +32,12 @@ test:
 build:
   stage: build
   script:
-    - cd nextjs-login
-    - cp .env.example .env.local || true
     - npm run build
   dependencies:
     - install
   artifacts:
     paths:
-      - nextjs-login/.next/
+      - .next/
     expire_in: 1 hour
   only:
     - main
-    - feat/novas-funcionalidades
