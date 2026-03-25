@@ -1,233 +1,299 @@
-# 🛍️ E-commerce Fullstack com Next.js
+# DOUR·ATTA — E-commerce de Joias
 
-Aplicação completa de e-commerce desenvolvida com Next.js, Prisma e MySQL, incluindo autenticação, catálogo de produtos, filtros, página de detalhes e carrinho de compras com gerenciamento global de estado.
-
----
-
-## ✨ Funcionalidades
-
-### 🔐 Autenticação
-- Cadastro de usuários
-- Login com JWT
-- Proteção de rotas
-
-### 🛒 Carrinho de Compras
-- Adição de produtos
-- Controle de quantidade
-- Atualização dinâmica
-- Abertura lateral (sidebar)
-- Estado global com Context API
-
-### 🛍️ Catálogo de Produtos
-- Listagem de produtos (coleções)
-- Filtros por categoria
-- Navegação dinâmica
-
-### 💎 Página de Produto
-- Nome, descrição e preço
-- Controle de estoque
-- Seleção de quantidade
-- Produtos relacionados
+> Plataforma de e-commerce completa para joias artesanais em ouro 18k, desenvolvida com Next.js, Prisma e MySQL.
 
 ---
 
-## 📋 Pré-requisitos
+## 📋 Sumário
 
-Antes de começar, certifique-se de ter instalado na sua máquina:
-
-- [Node.js](https://nodejs.org/) (versão 18 ou superior)
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- [Git](https://git-scm.com/)
+- [Sobre o Projeto](#sobre-o-projeto)
+- [Tecnologias](#tecnologias)
+- [Pré-requisitos](#pré-requisitos)
+- [Instalação](#instalação)
+- [Configuração do Banco de Dados](#configuração-do-banco-de-dados)
+- [Variáveis de Ambiente](#variáveis-de-ambiente)
+- [Rodando o Projeto](#rodando-o-projeto)
+- [Estrutura de Pastas](#estrutura-de-pastas)
+- [Funcionalidades](#funcionalidades)
+- [Painel Admin](#painel-admin)
+- [Equipe](#equipe)
 
 ---
 
-## 🚀 Como rodar o projeto
+## Sobre o Projeto
 
-### 1. Clone o repositório
+A **Douratta** é uma loja virtual de joias artesanais que combina elegância e tecnologia. O sistema oferece uma experiência completa de compra para o cliente e um painel administrativo robusto para gestão da loja.
 
+---
+
+## Tecnologias
+
+| Tecnologia | Versão | Uso |
+|---|---|---|
+| Next.js | 16.2 | Framework React (Pages Router) |
+| Prisma | 7.5 | ORM para banco de dados |
+| MySQL | 8.0 | Banco de dados relacional |
+| Docker | - | Container do banco de dados |
+| JWT | - | Autenticação |
+| bcryptjs | - | Hash de senhas |
+| cookies-next | - | Gerenciamento de cookies |
+| @prisma/adapter-mariadb | - | Adapter do banco |
+
+---
+
+## Pré-requisitos
+
+- Node.js 18+
+- npm ou yarn
+- Docker Desktop
+- Git
+
+---
+
+## Instalação
+
+**1. Clone o repositório:**
 ```bash
-git clone https://github.com/pedro07br/Douratta
-cd nextjs-login
+git clone https://github.com/seu-usuario/douratta.git
+cd douratta/nextjs-login
 ```
 
-### 2. Instale as dependências
-
+**2. Instale as dependências:**
 ```bash
 npm install
 ```
 
-### 3. Configure as variáveis de ambiente
+---
 
-Crie os arquivos `.env` e `.env.local` na raiz do projeto.
+## Configuração do Banco de Dados
 
-**.env** (usado pelo Prisma):
-```env
-DATABASE_URL="mysql://root@localhost:3307/nextjs_login"
-```
-
-**.env.local** (usado pelo Next.js):
-```env
-DATABASE_URL="mysql://root@localhost:3307/nextjs_login"
-JWT_SECRET="sua-chave-secreta-aqui"
-```
-
-> Use o `.env.example` como referência.
-
-### 4. Suba o banco de dados com Docker
-
+**1. Suba o container MySQL com Docker:**
 ```bash
 docker-compose up -d
 ```
 
-Verifique se o container está rodando:
+O banco será iniciado na porta **3307**.
 
+**2. Rode as migrations do Prisma:**
 ```bash
-docker ps
-```
-
-Você deve ver o container `nextjs-login-db` com status `Up`.
-
-### 5. Crie as tabelas no banco
-
-```bash
-npx prisma migrate dev --name init
-```
-
-### 6. Gere o Prisma Client
-
-```bash
+npx prisma migrate dev
 npx prisma generate
 ```
 
-### 7. Rode o projeto
-
-```bash
-npm run dev
+**3. (Opcional) Popule o banco com dados de exemplo:**
 ```
-
-Acesse [http://localhost:3000](http://localhost:3000) no navegador.
+POST http://localhost:3000/api/seed
+```
 
 ---
 
-## 🗂️ Estrutura do projeto
+## Variáveis de Ambiente
+
+Crie os arquivos `.env` e `.env.local` na raiz do projeto:
+
+**`.env`**
+```env
+DATABASE_URL="mysql://root@127.0.0.1:3307/nextjs_login"
+```
+
+**`.env.local`**
+```env
+DATABASE_URL="mysql://root@127.0.0.1:3307/nextjs_login"
+JWT_SECRET="sua-chave-secreta-aqui"
+```
+
+**`next.config.js`**
+```js
+const nextConfig = {
+  reactStrictMode: true,
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb'
+    }
+  },
+  images: {
+    domains: ['images.unsplash.com']
+  }
+}
+
+module.exports = nextConfig
+```
+
+---
+
+## Rodando o Projeto
+
+```bash
+# Certifique-se que o Docker está rodando
+docker-compose up -d
+
+# Inicie o servidor de desenvolvimento
+npm run dev
+```
+
+Acesse: [http://localhost:3000](http://localhost:3000)
+
+---
+
+## Estrutura de Pastas
 
 ```
 nextjs-login/
 ├── pages/
-│   ├── _app.js           # configuração global (CSS + ícones)
-│   ├── index.js          # home (protegida por token)
-│   ├── login.js          # tela de login
-│   ├── cadastro.js       # tela de cadastro
-│   ├── carrinho.js(novo) # tela do carrinho
-│   ├── api/
-│   │   └── user/
-│   │       ├── login.js      # rota de API para login
-│   │       └── cadastro.js   # rota de API para cadastro
-│   └── produtos/
-│       └── user/
-├── services/
-│   ├── index.js        # listagem + filtros
-│   └── [slug].js       # detalhe do produto
+│   ├── _app.js               # Provider global + CartSidebar
+│   ├── _document.js          # Head global (fontes)
+│   ├── index.js              # Home
+│   ├── login.js              # Login
+│   ├── cadastro.js           # Cadastro
+│   ├── produtos/
+│   │   ├── index.js          # Listagem de produtos
+│   │   └── [slug].js         # Detalhe do produto
+│   ├── carrinho.js           # Página do carrinho
+│   ├── checkout.js           # Checkout
+│   ├── confirmacao.js        # Confirmação do pedido
+│   ├── perfil.js             # Perfil do usuário
+│   ├── sobre.js              # Sobre a marca
+│   ├── contato.js            # Contato
+│   ├── admin/
+│   │   └── index.js          # Painel administrativo
+│   └── api/
+│       ├── user/             # Rotas do usuário
+│       │   ├── login.js
+│       │   ├── cadastro.js
+│       │   ├── perfil.js
+│       │   ├── senha.js
+│       │   ├── enderecos.js
+│       │   ├── pedidos.js
+│       │   └── favoritos.js
+│       ├── admin/            # Rotas administrativas
+│       │   ├── dashboard.js
+│       │   ├── produtos.js
+│       │   ├── pedidos.js
+│       │   ├── categorias.js
+│       │   ├── usuarios.js
+│       │   └── separacao.js
+│       ├── orders.js         # Criação de pedidos
+│       └── seed.js           # Seed de dados
 ├── src/
-│   ├── components/
-│   │   ├── Button/
-│   │   │   ├── Button.js
-│   │   │   └── Button.module.css
-│   │   ├── cart/
-│   │   │   └── Cart.module.css
-│   │   ├── cartSidebar/
-│   │   │   ├── CartSidebar.js
-│   │   │   └── cartSidebar.module.css
-│   │   ├── input/
-│   │   │   ├── input.js
-│   │   │   └── input.module.css
-│   │   ├── LoginCard/
-│   │   │   ├── loginCard.js
-│   │   │   └── loginCard.module.css
+│   ├── components/           # Componentes React
 │   │   ├── Navbar/
-│   │   │   ├── Navbar.js
-│   │   │   └── Navbar.module.css
-│   │   ├── productCard/
-│   │   │   ├── productCard.js
-│   │   │   └── productCard.module.css
+│   │   ├── Footer/
+│   │   ├── Home/
+│   │   ├── ProductCard/
 │   │   ├── ProductDetail/
-│   │   │   └── ProductDetail.module.css
-│   │   ├── ProductList/
-│   │   │   └── ProductList.module.css
-│   │   ├── LoginCard/
-│   │   │   ├── loginCard.js
-│   │   │   └── loginCard.module.css
+│   │   ├── CartSidebar/
+│   │   ├── Checkout/
+│   │   ├── Profile/
+│   │   ├── Admin/
+│   │   ├── Sobre/
+│   │   └── Contato/
 │   └── context/
-│       └── CartContext.js
+│       └── CartContext.js    # Context API do carrinho
+├── services/
+│   ├── prisma.js             # Cliente Prisma
+│   ├── user.js               # Serviços de usuário
+│   └── auth.js               # Verificação de JWT
+├── generated/prisma/         # Cliente Prisma gerado
 ├── prisma/
-│   └── schema.prisma     # modelo do banco de dados
-├── generated/
-│   └── prisma/           # gerado automaticamente pelo Prisma
-├── public/
-│   └── img/
-│       └── Tela-login.png
+│   ├── schema.prisma         # Schema do banco
+│   └── migrations/           # Histórico de migrations
 ├── styles/
-│   ├── globals.css
-│   ├──marble
-│   └──Home.module
+│   └── globals.css
+├── prisma.config.ts
 ├── docker-compose.yml
-├── .env.example
-└── prisma.config.ts
+└── next.config.js
 ```
 
 ---
 
-## 🛠️ Tecnologias
+## Funcionalidades
 
-- [Next.js](https://nextjs.org/) — framework React
-- [Prisma 7](https://www.prisma.io/) — ORM para banco de dados
-- [MySQL](https://www.mysql.com/) — banco de dados relacional
-- [Docker](https://www.docker.com/) — ambiente padronizado
-- [bcryptjs](https://www.npmjs.com/package/bcryptjs) — criptografia de senhas
-- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) — autenticação via JWT
-- [cookies-next](https://www.npmjs.com/package/cookies-next) — gerenciamento de cookies
-- [Ionicons](https://ionic.io/ionicons) — ícones
-- [Google Fonts — Poppins](https://fonts.google.com/specimen/Poppins) — tipografia
+### Para o Cliente
+- ✅ Cadastro e login com JWT
+- ✅ Listagem de produtos com filtro por categoria, busca e ordenação
+- ✅ Detalhe do produto com produtos relacionados
+- ✅ Carrinho de compras (sidebar + página dedicada)
+- ✅ Checkout completo com endereço e pagamento (cartão, PIX, boleto)
+- ✅ Página de confirmação de pedido
+- ✅ Perfil com dados pessoais, senha, endereços, pedidos e favoritos
+- ✅ Produtos com estoque 0 removidos automaticamente da vitrine
 
----
-
-## 🗄️ Banco de dados
-
-O banco roda na porta `3307` para não conflitar com instalações locais do MySQL.
-
-Para visualizar os dados no navegador:
-
-```bash
-npx prisma studio
-```
-
-Acesse [http://localhost:5555](http://localhost:5555).
+### Para a Loja
+- ✅ Painel administrativo completo
+- ✅ Dashboard com métricas e pedidos recentes
+- ✅ CRUD de produtos com upload de imagem
+- ✅ CRUD de categorias com imagem de produto
+- ✅ Gestão de pedidos com atualização de status
+- ✅ Tela de separação de pedidos para envio
+- ✅ Gestão de usuários (toggle admin/cliente, remover)
+- ✅ Controle automático de estoque ao finalizar pedido
+- ✅ Devolução de estoque ao negar pedido
 
 ---
 
-## ⚠️ Problemas comuns
+## Painel Admin
 
-**Docker não sobe o container:**
-```bash
-# para containers antigos e reinicia
-docker-compose down
-docker-compose up -d
+Acesse `/admin` com uma conta de administrador.
+
+Para criar o primeiro admin, cadastre um usuário normalmente e altere o campo `role` diretamente no banco:
+
+```sql
+UPDATE User SET role = 'ADMIN' WHERE email = 'seu@email.com';
 ```
 
-**Erro de migration:**
-```bash
-# reseta e recria as tabelas
-npx prisma migrate reset
-npx prisma migrate dev --name init
-```
+### Abas disponíveis
 
-**Prisma Client desatualizado:**
+| Aba | Descrição |
+|---|---|
+| Dashboard | Métricas e pedidos recentes |
+| Produtos | CRUD completo com imagem |
+| Pedidos | Visualização e atualização de status |
+| Separação | Fila de pedidos para envio |
+| Usuários | Gestão de contas |
+| Categorias | CRUD com imagem de produto |
+
+---
+
+## Equipe
+
+| Nome | Cargo |
+|---|---|
+| Pedro Henrique Carvalho dos Santos | Programador & CEO |
+| Pedro Henrique Gomes da Silva | Chefe & Artesão Profissional |
+| Juan Assis | Vendedor & Gerente |
+| Pedro Weverton Bernardes Rodrigues | Mestre em Refinamento de Joias |
+
+---
+
+## Scripts
+
 ```bash
-npx prisma generate
+npm run dev        # Inicia o servidor de desenvolvimento
+npm run build      # Gera o build de produção
+npm run start      # Inicia o servidor de produção
+npx prisma studio  # Abre o Prisma Studio (visualizador do banco)
+npx prisma migrate dev   # Roda as migrations
+npx prisma generate      # Gera o cliente Prisma
 ```
 
 ---
 
-## 📄 Licença
+## Branch Strategy
 
-Este projeto está sob a licença MIT.
+```
+main              # Produção — código estável
+feat/melhorias    # Branch atual de desenvolvimento
+```
+
+Para fazer merge de uma feature na main:
+```bash
+git checkout main
+git merge feat/melhorias
+git push
+```
+
+---
+
+<div align="center">
+  <strong>DOUR·ATTA</strong> — Joias Exclusivas · Feitas à Mão · Ouro 18K
+</div>
