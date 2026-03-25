@@ -3,6 +3,7 @@ import Navbar from "../src/components/Navbar/Navbar";
 import ProductCard from "../src/components/productCard/ProductCard";
 import styles from "../src/components/Home/Home.module.css";
 import prisma from "../services/prisma";
+import ProductCardSkeleton from "../src/components/productCard/ProductCardSkeleton";
 
 export default function Home({ featured, categories }) {
   return (
@@ -109,9 +110,13 @@ export default function Home({ featured, categories }) {
           <div className={styles.sectionLine} />
         </div>
         <div className={styles.productsGrid}>
-          {featured.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {featured.length === 0
+            ? Array.from({ length: 4 }).map((_, i) => (
+                <ProductCardSkeleton key={i} />
+              ))
+            : featured.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
         </div>
         <div className={styles.seeAll}>
           <Link href="/produtos">

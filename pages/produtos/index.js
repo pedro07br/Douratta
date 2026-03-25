@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Navbar from "../../src/components/Navbar/Navbar";
 import ProductCard from "../../src/components/productCard/ProductCard";
+import ProductCardSkeleton from "../../src/components/productCard/ProductCardSkeleton";
 import styles from "../../src/components/ProductList/ProductList.module.css";
 import prisma from "../../services/prisma";
 
@@ -9,6 +10,7 @@ export default function Produtos({ products, categories }) {
   const [category, setCategory] = useState(null);
   const [sort, setSort] = useState("relevancia");
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const ITEMS_PER_PAGE = 12;
 
@@ -54,10 +56,7 @@ export default function Produtos({ products, categories }) {
 
           <button
             className={!category ? styles.filterBtnActive : styles.filterBtn}
-            onClick={() => {
-              setCategory(null);
-              setPage(1);
-            }}
+            onClick={() => { setCategory(null); setPage(1); }}
           >
             TODOS
           </button>
@@ -65,13 +64,8 @@ export default function Produtos({ products, categories }) {
           {categories.map((cat) => (
             <button
               key={cat.id}
-              className={
-                category === cat.id ? styles.filterBtnActive : styles.filterBtn
-              }
-              onClick={() => {
-                setCategory(cat.id);
-                setPage(1);
-              }}
+              className={category === cat.id ? styles.filterBtnActive : styles.filterBtn}
+              onClick={() => { setCategory(cat.id); setPage(1); }}
             >
               {cat.name.toUpperCase()}
             </button>
@@ -89,7 +83,11 @@ export default function Produtos({ products, categories }) {
         </div>
 
         <div className={styles.grid}>
-          {paginated.length > 0 ? (
+          {loading ? (
+            Array.from({ length: 8 }).map((_, i) => (
+              <ProductCardSkeleton key={i} />
+            ))
+          ) : paginated.length > 0 ? (
             paginated.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))
@@ -127,11 +125,7 @@ export default function Produtos({ products, categories }) {
 export const getServerSideProps = async () => {
   const [products, categories] = await Promise.all([
     prisma.product.findMany({
-      where: {
-        active: true,
-        stock: { gt: 0 },
-        // restante dos filtros que já existem
-      },
+      where: { active: true, stock: { gt: 0 } },
       include: { category: true },
     }),
     prisma.category.findMany({

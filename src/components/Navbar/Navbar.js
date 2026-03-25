@@ -1,11 +1,13 @@
 import Link from 'next/link'
 import { useCart } from '../../context/CartContext'
 import { useEffect, useState } from 'react'
+import { useTheme } from '../../hooks/useTheme'
 import styles from './Navbar.module.css'
 
 export default function Navbar() {
   const { count, setIsOpen } = useCart()
   const [isAdmin, setIsAdmin] = useState(false)
+  const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
     fetch('/api/user/perfil')
@@ -27,6 +29,9 @@ export default function Navbar() {
         {isAdmin && (
           <Link href="/admin" className={styles.adminPill}>ADMIN</Link>
         )}
+        <button className={styles.themePill} onClick={toggleTheme} title="Alternar tema">
+          {theme === 'light' ? '🌙' : '☀️'}
+        </button>
         <button className={styles.cartPill} onClick={() => setIsOpen(true)}>
           CARRINHO · {count}
         </button>

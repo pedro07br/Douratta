@@ -74,3 +74,31 @@
     background: #1a1a1a;
     color: white;
 }
+
+.themePill {
+    background: none;
+    border: 0.5px solid var(--border);
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    color: var(--text-primary);
+}
+
+.themePill:hover {
+    border-color: var(--gold);
+}
+
+.nav {
+    background: var(--bg-white);
+    border-bottom: 0.5px solid var(--border);
+    /* resto igual */
+}
+
+.logo { color: var(--text-primary); }
+.navLink { color: var(--text-muted); }
+.navLink:hover { color: var(--gold); }
+.cartPill { 
+    border-color: var(--gold);
+    color: var(--text-primary);
+}

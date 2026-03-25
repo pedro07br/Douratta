@@ -100,3 +100,8 @@
     border-color: #9a7c4f;
     color: #9a7c4f;
 }
+
+.card { background: var(--bg-card); border-color: var(--border); }
+.name { color: var(--text-primary); }
+.category { color: var(--text-muted); }
+.price { color: var(--gold); }
