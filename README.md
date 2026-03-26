@@ -54,7 +54,7 @@ A **Douratta** é uma loja virtual de joias artesanais que combina elegância e 
 
 **1. Clone o repositório:**
 ```bash
-git clone https://github.com/seu-usuario/douratta.git
+git clone https://github.com/pedro07br/Douratta
 cd douratta/nextjs-login
 ```
 
