@@ -314,18 +314,36 @@
 .promoBtn:hover { background: #f0e6d0; }
 
 @media (max-width: 768px) {
+    .hero { height: 480px; }
     .heroTitle { font-size: 32px; letter-spacing: 4px; }
-    .catGrid { grid-template-columns: repeat(2, 1fr); }
-    .productsGrid { grid-template-columns: repeat(2, 1fr); }
-    .instSection { grid-template-columns: 1fr; gap: 32px; }
-    .instImg { display: none; }
+    .heroSub { font-size: 10px; letter-spacing: 2px; }
     .heroBtns { flex-direction: column; align-items: center; }
-}
+    .btnPrimary, .btnSecondary { width: 220px; }
 
-.section { background: var(--bg); }
-.sectionWhite { background: var(--bg-white); }
-.sectionTitle { color: var(--text-primary); }
-.sectionSub { color: var(--text-muted); }
-.catCard { background: var(--bg-card); border-color: var(--border); }
-.catName { color: var(--text-primary); }
-.catCount { color: var(--text-muted); }
+    .section { padding: 40px 16px; }
+    .sectionWhite { padding: 40px 16px; }
+
+    .catGrid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 100%;
+    }
+
+    .productsGrid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 100%;
+    }
+
+    .instSection {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 48px 16px;
+        max-width: 100%;
+    }
+
+    .instImg { display: none; }
+
+    .instTitle { font-size: 24px; letter-spacing: 2px; }
+
+    .promo { padding: 48px 16px; }
+    .promoTitle { font-size: 24px; letter-spacing: 4px; }
+}
