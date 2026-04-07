@@ -51,3 +51,12 @@ body {
   background: var(--bg);
   min-height: 100vh;
 }
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
