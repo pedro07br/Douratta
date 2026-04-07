@@ -105,3 +105,26 @@
 .name { color: var(--text-primary); }
 .category { color: var(--text-muted); }
 .price { color: var(--gold); }
+
+@media (max-width: 768px) {
+    .info { padding: 12px; }
+
+    .name { font-size: 12px; margin-bottom: 8px; }
+
+    .category { font-size: 9px; margin-bottom: 4px; }
+
+    .price { font-size: 12px; }
+
+    .bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .addBtn {
+        width: 100%;
+        text-align: center;
+        padding: 7px 0;
+        font-size: 9px;
+    }
+}
