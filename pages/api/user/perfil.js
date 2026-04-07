@@ -10,7 +10,13 @@ export default async function handler(req, res) {
     const decoded = verifyToken(token)
     const user = await prisma.user.findUnique({
       where: { email: decoded.email },
-      select: { id: true, name: true, email: true, phone: true, cpf: true }
+      select: { 
+        id: true, 
+        name: true, 
+        email: true, 
+        phone: true, 
+        cpf: true, 
+        role: true }
     })
 
     if (req.method === 'GET') {
