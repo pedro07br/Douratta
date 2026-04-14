@@ -23,7 +23,12 @@ export default function CartSidebar() {
 
         <div className={styles.items}>
           {items.length === 0 ? (
-            <div className={styles.empty}>SEU CARRINHO ESTÁ VAZIO</div>
+            <div className={styles.empty}>
+              <div>SEU CARRINHO ESTÁ VAZIO</div>
+              <Link href="/produtos" onClick={() => setIsOpen(false)}>
+                <button className={styles.emptyBtn}>VER COLEÇÃO</button>
+              </Link>
+            </div>
           ) : (
             items.map(item => (
               <div key={item.id} className={styles.item}>
@@ -55,27 +60,26 @@ export default function CartSidebar() {
           )}
         </div>
 
-        {items.length > 0 && (
-          <div className={styles.footer}>
-            <div className={styles.subtotalRow}>
-              <span>{count} {count === 1 ? 'ITEM' : 'ITENS'}</span>
-              <span>{formatted(total)}</span>
-            </div>
-            <div className={styles.totalRow}>
-              <span className={styles.totalLabel}>TOTAL</span>
-              <span className={styles.totalValue}>{formatted(total)}</span>
-            </div>
-            <Link href="/checkout">
-              <button className={styles.checkoutBtn}>FINALIZAR COMPRA</button>
-            </Link>
-            <Link href="/checkout">
-              <button className={styles.checkoutBtn} onClick={() => setIsOpen(false)}>
-                FINALIZAR COMPRA
-              </button>
-            </Link>
-            
-          </div>
-        )}
+        <div className={styles.footer}>
+          {items.length > 0 && (
+            <>
+              <div className={styles.subtotalRow}>
+                <span>{count} {count === 1 ? 'ITEM' : 'ITENS'}</span>
+                <span>{formatted(total)}</span>
+              </div>
+              <div className={styles.totalRow}>
+                <span className={styles.totalLabel}>TOTAL</span>
+                <span className={styles.totalValue}>{formatted(total)}</span>
+              </div>
+              <Link href="/checkout" onClick={() => setIsOpen(false)}>
+                <button className={styles.checkoutBtn}>FINALIZAR COMPRA</button>
+              </Link>
+            </>
+          )}
+          <Link href="/perfil" onClick={() => setIsOpen(false)}>
+            <button className={styles.favBtn}>♥ MEUS FAVORITOS</button>
+          </Link>
+        </div>
       </div>
     </>
   )
