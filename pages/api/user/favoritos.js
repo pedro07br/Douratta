@@ -1,5 +1,5 @@
-import prisma from '../../services/prisma'
-import { verifyToken } from '../../services/auth'
+import prisma from '../../../services/prisma'
+import { verifyToken } from '../../../services/auth'
 import { getCookie } from 'cookies-next'
 
 export default async function handler(req, res) {
