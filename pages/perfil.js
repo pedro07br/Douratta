@@ -12,6 +12,11 @@ export default function Perfil({ user: initialUser }) {
   const [orders, setOrders] = useState([]);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const { query } = useRouter();
+
+  useEffect(() => {
+    if (query.aba) setPanel(query.aba);
+  }, [query.aba]);
 
   const [dadosForm, setDadosForm] = useState({
     name: user?.name || "",
@@ -188,7 +193,7 @@ export default function Perfil({ user: initialUser }) {
           <div className={styles.userName}>{user?.name}</div>
           <div className={styles.userEmail}>{user?.email}</div>
 
-          {["dados", "senha", "enderecos", "pedidos"].map((p) => (
+          {["dados", "senha", "enderecos", "pedidos", "favoritos"].map((p) => (
             <button
               key={p}
               className={`${styles.menuItem} ${panel === p ? styles.menuActive : ""}`}
@@ -200,6 +205,7 @@ export default function Perfil({ user: initialUser }) {
                   senha: "ALTERAR SENHA",
                   enderecos: "ENDEREÇOS",
                   pedidos: "HISTÓRICO DE PEDIDOS",
+                  favoritos: "♥ FAVORITOS",
                 }[p]
               }
             </button>
