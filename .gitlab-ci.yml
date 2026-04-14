@@ -1,4 +1,4 @@
-image: node:18
+image: node:22
 
 stages:
   - install
@@ -10,7 +10,6 @@ cache:
   paths:
     - node_modules/
 
-# INSTALA DEPENDÊNCIAS
 install:
   stage: install
   script:
@@ -20,7 +19,6 @@ install:
       - node_modules/
     expire_in: 1 hour
 
-# TESTES
 test:
   stage: test
   script:
@@ -28,7 +26,6 @@ test:
   dependencies:
     - install
 
-# BUILD
 build:
   stage: build
   script:
