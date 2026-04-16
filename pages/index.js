@@ -160,7 +160,7 @@ export default function Home({ featured, categories }) {
         <div className={styles.promoTag}>OFERTA ESPECIAL</div>
         <h2 className={styles.promoTitle}>FRETE GRÁTIS</h2>
         <p className={styles.promoSub}>
-          EM COMPRAS ACIMA DE R$ 500 · VÁLIDO ATÉ 31/03
+          EM COMPRAS ACIMA DE R$ 500 · VÁLIDO ATÉ 25/09
         </p>
         <Link href="/produtos">
           <button className={styles.promoBtn}>APROVEITAR AGORA</button>
