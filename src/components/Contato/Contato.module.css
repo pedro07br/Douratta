@@ -1,8 +1,8 @@
 .hero {
     text-align: center;
     padding: 64px 32px 48px;
-    border-bottom: 0.5px solid #e8e0d4;
-    background: white;
+    border-bottom: 0.5px solid var(--border);
+    background: var(--bg-white);
 }
 
 .heroTag {
