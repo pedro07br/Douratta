@@ -1,6 +1,6 @@
 .hero {
     height: 340px;
-    background: #1a1410;
+    background: var(--hero-bg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -30,11 +30,12 @@
 .heroTitle {
     font-size: 36px;
     font-weight: 300;
-    color: #f0e6d0;
+    color: var(--hero-text);
     font-family: Georgia, serif;
     letter-spacing: 8px;
     margin-bottom: 12px;
 }
+
 
 .heroDivider {
     width: 32px;
