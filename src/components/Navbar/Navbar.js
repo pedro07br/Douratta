@@ -11,12 +11,16 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    fetch('/api/user/perfil')
-      .then(r => r.json())
-      .then(data => { if (data.role === 'ADMIN') setIsAdmin(true) })
-      .catch(() => {})
-  }, [])
-
+  fetch('/api/user/perfil')
+    .then(r => {
+      if (!r.ok) return null
+      return r.json()
+    })
+    .then(data => {
+      if (data?.role === 'ADMIN') setIsAdmin(true)
+    })
+    .catch(() => {})
+}, [])
   return (
     <>
       <nav className={styles.nav}>
