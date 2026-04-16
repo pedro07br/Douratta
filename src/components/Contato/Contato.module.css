@@ -15,7 +15,7 @@
 .heroTitle {
     font-size: 28px;
     font-weight: 400;
-    color: #1a1a1a;
+    color: var(--text-primary);
     font-family: Georgia, serif;
     letter-spacing: 6px;
     margin-bottom: 12px;
