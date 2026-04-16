@@ -1,20 +1,21 @@
 .hero {
     text-align: center;
     padding: 40px 32px 28px;
-    border-bottom: 0.5px solid #e8e0d4;
+    border-bottom: 0.5px solid var(--border);
+    background: var(--bg);
 }
 
 .heroTitle {
     font-size: 22px;
     font-weight: 400;
-    color: #1a1a1a;
+    color: var(--text-primary);
     font-family: Georgia, serif;
     letter-spacing: 6px;
 }
 
 .heroSub {
     font-size: 10px;
-    color: #9a8a78;
+    color: var(--text-muted);
     letter-spacing: 2px;
     margin-top: 8px;
 }
@@ -33,10 +34,11 @@
     max-width: 1000px;
     margin: 40px auto;
     padding: 0 32px;
+    background: var(--bg);
 }
 
 .sidebar {
-    border-right: 0.5px solid #e8e0d4;
+    border-right: 0.5px solid var(--border);
     padding-right: 32px;
 }
 
@@ -44,8 +46,8 @@
     width: 72px;
     height: 72px;
     border-radius: 50%;
-    background: #f0ece6;
-    border: 0.5px solid #d8d0c4;
+    background: var(--bg);
+    border: 0.5px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -57,14 +59,14 @@
 
 .userName {
     font-size: 14px;
-    color: #1a1a1a;
+    color: var(--text-primary);
     font-family: Georgia, serif;
     margin-bottom: 4px;
 }
 
 .userEmail {
     font-size: 11px;
-    color: #9a8a78;
+    color: var(--text-muted);
     letter-spacing: 0.5px;
     margin-bottom: 28px;
 }
@@ -74,7 +76,7 @@
     padding: 10px 0;
     font-size: 11px;
     letter-spacing: 2px;
-    color: #9a8a78;
+    color: var(--text-muted);
     cursor: pointer;
     background: none;
     border: none;
@@ -88,7 +90,7 @@
 
 .menuDivider {
     height: 0.5px;
-    background: #e8e0d4;
+    background: var(--border);
     margin: 12px 0;
 }
 
@@ -120,7 +122,7 @@
 .sectionTitle {
     font-size: 14px;
     font-weight: 400;
-    color: #1a1a1a;
+    color: var(--text-primary);
     font-family: Georgia, serif;
     letter-spacing: 3px;
 }
@@ -136,24 +138,24 @@
 
 .fieldLabel {
     font-size: 10px;
-    color: #9a8a78;
+    color: var(--text-muted);
     letter-spacing: 2px;
     margin-bottom: 8px;
 }
 
 .fieldInput {
     width: 100%;
-    background: white;
-    border: 0.5px solid #d8d0c4;
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
     padding: 10px 14px;
     font-size: 13px;
-    color: #1a1a1a;
+    color: var(--text-primary);
     outline: none;
     transition: border-color 0.2s;
 }
 
 .fieldInput:focus { border-color: #9a7c4f; }
-.fieldInput:disabled { background: #f8f6f2; color: #9a8a78; cursor: not-allowed; }
+.fieldInput:disabled { background: var(--bg); color: var(--text-muted); cursor: not-allowed; }
 
 .fieldRow {
     display: grid;
@@ -180,8 +182,8 @@
     height: 44px;
     padding: 0 32px;
     background: transparent;
-    color: #9a8a78;
-    border: 0.5px solid #d8d0c4;
+    color: var(--text-muted);
+    border: 0.5px solid var(--border);
     font-size: 11px;
     letter-spacing: 3px;
     cursor: pointer;
@@ -192,8 +194,8 @@
 .cancelBtn:hover { border-color: #9a7c4f; color: #9a7c4f; }
 
 .addressCard {
-    background: white;
-    border: 0.5px solid #e8e0d4;
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
     padding: 20px;
     margin-bottom: 12px;
     display: flex;
@@ -203,14 +205,14 @@
 
 .addressLabel {
     font-size: 10px;
-    color: #9a8a78;
+    color: var(--text-muted);
     letter-spacing: 2px;
     margin-bottom: 8px;
 }
 
 .addressInfo {
     font-size: 13px;
-    color: #1a1a1a;
+    color: var(--text-primary);
     line-height: 1.8;
 }
 
@@ -218,7 +220,7 @@
 
 .addrBtn {
     font-size: 10px;
-    color: #bbb;
+    color: var(--text-muted);
     background: none;
     border: none;
     cursor: pointer;
@@ -229,8 +231,8 @@
 .addrBtn:hover { color: #a32d2d; }
 
 .addressForm {
-    background: white;
-    border: 0.5px solid #e8e0d4;
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
     padding: 24px;
     margin-top: 12px;
 }
@@ -251,8 +253,8 @@
 .addAddressBtn:hover { background: #9a7c4f; color: white; }
 
 .orderItem {
-    background: white;
-    border: 0.5px solid #e8e0d4;
+    background: var(--bg-card);
+    border: 0.5px solid var(--border);
     padding: 20px;
     margin-bottom: 12px;
     display: flex;
@@ -262,21 +264,21 @@
 
 .orderId {
     font-size: 11px;
-    color: #9a8a78;
+    color: var(--text-muted);
     letter-spacing: 1px;
     margin-bottom: 4px;
 }
 
 .orderDate {
     font-size: 13px;
-    color: #1a1a1a;
+    color: var(--text-primary);
     font-family: Georgia, serif;
     margin-bottom: 4px;
 }
 
 .orderCount {
     font-size: 11px;
-    color: #9a8a78;
+    color: var(--text-muted);
 }
 
 .orderRight { text-align: right; }
@@ -302,7 +304,7 @@
 
 .empty {
     font-size: 11px;
-    color: #9a8a78;
+    color: var(--text-muted);
     letter-spacing: 2px;
     text-align: center;
     padding: 40px 0;
@@ -316,13 +318,12 @@
 
     .sidebar {
         border-right: none;
-        border-bottom: 0.5px solid #e8e0d4;
+        border-bottom: 0.5px solid var(--border);
         padding-right: 0;
         padding-bottom: 24px;
         margin-bottom: 24px;
     }
 
     .content { padding-left: 0; }
-
     .fieldRow { grid-template-columns: 1fr; }
 }
