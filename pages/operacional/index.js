@@ -1,6 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { deleteCookie } from "cookies-next";
+import { Client } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
 import {
   LineChart,
   Line,
@@ -26,6 +28,8 @@ export default function Operacional({ user }) {
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
   const [qtdMap, setQtdMap] = useState({});
+  const [notificacao, setNotificacao] = useState("");
+  const stompClient = useRef(null);
 
   const formatted = (v) =>
     new Intl.NumberFormat("pt-BR", {
@@ -68,6 +72,36 @@ export default function Operacional({ user }) {
 
     return () => clearInterval(interval);
   }, [panel, filtroStatus, page]);
+
+  useEffect(() => {
+    const client = new Client({
+      webSocketFactory: () => new SockJS("http://localhost:8080/ws"),
+      onConnect: () => {
+        console.log("WebSocket conectado!");
+
+        client.subscribe("/topic/pedidos-novos", (message) => {
+          console.log("Novo pedido via WebSocket:", message.body);
+          fetchDashboard();
+          if (panel === "pedidos") fetchPedidos();
+          setNotificacao("🔔 Novo pedido recebido!");
+          setTimeout(() => setNotificacao(""), 5000);
+        });
+
+        client.subscribe("/topic/status-pedidos", (message) => {
+          if (panel === "pedidos") fetchPedidos();
+          if (panel === "dashboard") fetchDashboard();
+        });
+      },
+      onDisconnect: () => console.log("WebSocket desconectado"),
+      onStompError: (frame) => console.warn("Erro WebSocket:", frame),
+      reconnectDelay: 5000,
+    });
+
+    client.activate();
+    stompClient.current = client;
+
+    return () => client.deactivate();
+  }, []);
 
   const fetchDashboard = async () => {
     const res = await fetch("/api/operacional/dashboard");
@@ -132,6 +166,22 @@ export default function Operacional({ user }) {
           </button>
         </div>
       </div>
+
+      {notificacao && (
+        <div
+          style={{
+            background: "#32a050",
+            color: "white",
+            padding: "10px 32px",
+            fontSize: 12,
+            letterSpacing: 2,
+            textAlign: "center",
+            animation: "fadeIn 0.3s ease",
+          }}
+        >
+          {notificacao}
+        </div>
+      )}
 
       <div className={styles.layout}>
         {/* SIDEBAR */}
