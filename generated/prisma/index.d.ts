@@ -75,7 +75,8 @@ export type Coupon = $Result.DefaultSelection<Prisma.$CouponPayload>
 export namespace $Enums {
   export const Role: {
   CUSTOMER: 'CUSTOMER',
-  ADMIN: 'ADMIN'
+  ADMIN: 'ADMIN',
+  OPERATOR: 'OPERATOR'
 };
 
 export type Role = (typeof Role)[keyof typeof Role]

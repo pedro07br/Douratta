@@ -142,7 +142,6 @@ export default function Admin({ user }) {
       fetchCategories();
     }
     if (panel === "pedidos") fetchOrders();
-    if (panel === "separacao") fetchSeparacao();
     if (panel === "categorias") {
       fetchCategories();
       fetchProducts();
@@ -337,7 +336,6 @@ export default function Admin({ user }) {
             "dashboard",
             "produtos",
             "pedidos",
-            "separacao",
             "cupons",
             "usuarios",
             "categorias",
@@ -352,7 +350,6 @@ export default function Admin({ user }) {
                   dashboard: "DASHBOARD",
                   produtos: "PRODUTOS",
                   pedidos: "PEDIDOS",
-                  separacao: "SEPARAÇÃO",
                   cupons: "CUPONS",
                   usuarios: "USUÁRIOS",
                   categorias: "CATEGORIAS",

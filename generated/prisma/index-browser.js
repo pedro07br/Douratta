@@ -278,7 +278,8 @@ exports.Prisma.CouponOrderByRelevanceFieldEnum = {
 };
 exports.Role = exports.$Enums.Role = {
   CUSTOMER: 'CUSTOMER',
-  ADMIN: 'ADMIN'
+  ADMIN: 'ADMIN',
+  OPERATOR: 'OPERATOR'
 };
 
 exports.OrderStatus = exports.$Enums.OrderStatus = {

@@ -43,12 +43,11 @@ export default async function handler(req, res) {
       } else if (coupon.type === 'FIXED') {
         discount = parseFloat(coupon.value)
       } else if (coupon.type === 'FREESHIP') {
-        discount = 0 // frete já é grátis, apenas registra
+        discount = 0
       }
 
       finalTotal = Math.max(0, finalTotal - discount)
 
-      // Incrementa uso do cupom
       await prisma.coupon.update({
         where: { id: coupon.id },
         data: { usedCount: { increment: 1 } }
@@ -79,6 +78,23 @@ export default async function handler(req, res) {
         where: { id: parseInt(item.productId) },
         data: { stock: { decrement: parseInt(item.quantity) } }
       })
+    }
+
+    // Publica no Kafka via Spring Boot
+    try {
+      await fetch('http://localhost:8080/api/kafka/pedidos/publicar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId: order.id,
+          userId:  user.id,
+          total:   finalTotal,
+          status:  'PENDING',
+          items:   body.items
+        })
+      })
+    } catch (kafkaErr) {
+      console.warn('Kafka indisponível:', kafkaErr.message)
     }
 
     res.status(201).json(order)
