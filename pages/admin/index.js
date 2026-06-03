@@ -259,7 +259,9 @@ export default function Admin({ user }) {
   };
 
   const handleToggleAdmin = async (id, currentRole) => {
-    const newRole = currentRole === "ADMIN" ? "CUSTOMER" : "ADMIN";
+    const roles = ["CUSTOMER", "OPERATOR", "ADMIN"];
+    const currentIndex = roles.indexOf(currentRole);
+    const newRole = roles[(currentIndex + 1) % roles.length];
     await fetch("/api/admin/usuarios", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -441,9 +443,19 @@ export default function Admin({ user }) {
                       <td>{u.email}</td>
                       <td>
                         <span
-                          className={`${styles.statusBadge} ${u.role === "ADMIN" ? styles.statusAdmin : styles.statusActive}`}
+                          className={`${styles.statusBadge} ${
+                            u.role === "ADMIN"
+                              ? styles.statusAdmin
+                              : u.role === "OPERATOR"
+                                ? styles.statusShipped
+                                : styles.statusActive
+                          }`}
                         >
-                          {u.role === "ADMIN" ? "ADMIN" : "CLIENTE"}
+                          {u.role === "ADMIN"
+                            ? "ADMIN"
+                            : u.role === "OPERATOR"
+                              ? "OPERADOR"
+                              : "CLIENTE"}
                         </span>
                       </td>
                       <td>
@@ -455,8 +467,10 @@ export default function Admin({ user }) {
                           onClick={() => handleToggleAdmin(u.id, u.role)}
                         >
                           {u.role === "ADMIN"
-                            ? "TORNAR CLIENTE"
-                            : "TORNAR ADMIN"}
+                            ? "→ CLIENTE"
+                            : u.role === "OPERATOR"
+                              ? "→ ADMIN"
+                              : "→ OPERADOR"}
                         </button>
                         <button
                           className={`${styles.actionBtn} ${styles.actionDel}`}
